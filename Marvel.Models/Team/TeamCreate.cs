@@ -5,13 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Marvel.Data.Entities
+namespace Marvel.Models.Team
 {
-    public class TeamEntity
+    public class TeamCreate
     {
-        [Key]
-        public int TeamId { get; set; }
-        [Required]
+        [Required, MaxLength(100, ErrorMessage = "{0} must contain no more than {1} characters.")]
         public string TeamName { get; set; }
         public ICollection<CharacterEntity> TeamMembers { get; set; }
         public string Leader { get; set; }

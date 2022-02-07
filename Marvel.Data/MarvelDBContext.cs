@@ -8,6 +8,9 @@ namespace Marvel.Data
 {
     public class MarvelDbContext : DbContext
     {
-        public MarvelDbContext (DbContextOptions<MarvelDbContext> options) : base(options) {}
+        public MarvelDbContext (DbContextOptions<MarvelDbContext> options) : base(options) 
+        {
+            public DbSet<TeamEntity> Teams { get; set; }
+        }
     }
 }
