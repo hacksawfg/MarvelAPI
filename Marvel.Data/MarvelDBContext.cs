@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Marvel.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marvel.Data
@@ -10,6 +11,7 @@ namespace Marvel.Data
     {
         public MarvelDbContext (DbContextOptions<MarvelDbContext> options) : base(options) 
         {
+            public DbSet<MovieEntity> Movies { get; set; }
             public DbSet<TeamEntity> Teams { get; set; }
         }
     }

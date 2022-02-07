@@ -3,30 +3,41 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Marvel.Models.Movie;
+using Marvel.Services.Movie;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Marvel.WebAPI.Controllers
 {
     [Route("[controller]")]
+    [ApiController]
     public class MovieController : Controller
     {
-        private readonly ILogger<MovieController> _logger;
-
-        public MovieController(ILogger<MovieController> logger)
+        private readonly IMovieService _movieService;
+        public MovieController(IMovieService movieService)
         {
-            _logger = logger;
+            _movieService = movieService;
         }
 
-        public IActionResult Index()
+        [HttpPost]
+        public async Task<IActionResult> CreateMovie([FromForm] MovieCreate newMovie)
         {
-            return View();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            if (await _movieService.CreateMarvelMovieAsync(newMovie))
+                return Ok("Movie created successfully");
+            
+            return BadRequest("Unable to create movie");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        [HttpGet]
+        public async Task<IActionResult> ListAllMarvelMovies()
         {
-            return View("Error!");
+            var movies = await _movieService.GetAllMarvelMoviesAsync();
+            return Ok(movies);
         }
+
     }
 }

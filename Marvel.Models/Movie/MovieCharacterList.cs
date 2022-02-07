@@ -7,6 +7,7 @@ namespace Marvel.Models.Movie
 {
     public class MovieCharacterList
     {
-        
+        public string MovieName { get; set; }
+        public List<string> MovieCharacters { get; set; }
     }
 }

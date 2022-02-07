@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
 using Marvel.Models.Movie;
+using Microsoft.EntityFrameworkCore;
 
 namespace Marvel.Services.Movie
 {
@@ -25,6 +26,21 @@ namespace Marvel.Services.Movie
 
             var numberOfChanges = await _context.SaveChangesAsync();
             return numberOfChanges == 1;
+        }
+
+        public async Task<List<MovieListItem>> GetAllMarvelMoviesAsync()
+        {
+            var movies = await _context.Movies
+                .Select (entity => new MovieListItem
+                {
+                    MovieName = entity.MovieName,
+                    ReleaseDate = entity.ReleaseDate,
+                    MovieBoxOfficeUSD = entity.MovieBoxOfficeUSD,
+                    MovieCharacters = entity.MovieCharacters,
+                    MovieDirector = entity.MovieDirector
+                }).ToListAsync();
+            
+            return movies;
         }
     }
 }
