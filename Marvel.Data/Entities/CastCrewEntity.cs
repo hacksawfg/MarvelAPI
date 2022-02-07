@@ -10,11 +10,14 @@ namespace Marvel.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Role { get; set; }
         public DateTime Birthday { get; set; }
+        [Required]
         public string ImdbPage { get; set; }
         public virtual ICollection<MovieEntity> Movies { get; set; }
-        //public virtual CharacterEntity Character { get; set; }
+        //public virtual MarvelCharacterEntity Character { get; set; }
     }
 }
