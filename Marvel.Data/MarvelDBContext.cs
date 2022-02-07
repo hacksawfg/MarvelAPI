@@ -10,4 +10,6 @@ namespace Marvel.Data
     {
         public MarvelDbContext (DbContextOptions<MarvelDbContext> options) : base(options) {}
     }
+
+    
 }
