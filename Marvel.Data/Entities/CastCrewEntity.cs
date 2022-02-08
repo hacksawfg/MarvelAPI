@@ -18,6 +18,6 @@ namespace Marvel.Data.Entities
         [Required]
         public string ImdbPage { get; set; }
         public virtual ICollection<MovieEntity> Movies { get; set; }
-        //public virtual MarvelCharacterEntity Character { get; set; }
+        public virtual MarvelCharacterEntity Character { get; set; }
     }
 }

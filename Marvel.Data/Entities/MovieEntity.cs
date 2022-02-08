@@ -26,8 +26,8 @@ namespace Marvel.Data.Entities
 
 
         //  Drawing from other tables section
-        public ICollection<TeamEntity> MovieTeams { get; set; } // to be determined if adding or not
-        public ICollection<string> MovieCharacters { get; set; }
+        public virtual ICollection<TeamEntity> MovieTeams { get; set; } // to be determined if adding or not
+        public virtual ICollection<string> MovieCharacters { get; set; }
         // public List<string> MovieLocations { get; set; }
     }
 }
