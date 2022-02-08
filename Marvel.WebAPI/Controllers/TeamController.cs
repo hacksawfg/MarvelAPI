@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Marvel.Models.Team;
 using Marvel.Services.Team;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marvel.WebAPI.Controllers
@@ -22,6 +22,12 @@ namespace Marvel.WebAPI.Controllers
             if (createResult) { return Ok("Team added to database."); }
             return BadRequest("Team could not be added.");
         }
+        [HttpGet, ProducesResponseType(typeof(IEnumerable<TeamListItem>), 1000)]
+        public async Task<IActionResult> GetAllTeams()
+        {
+            var teams = await _teamService.GetAllTeamsAsync();
+            return Ok(teams);
+        }
         [HttpGet("teamId")]
         public async Task<IActionResult> GetTeamById([FromRoute] int teamId)
         {
@@ -37,11 +43,11 @@ namespace Marvel.WebAPI.Controllers
                 : BadRequest("Team could not be updated.");
         }
         [HttpDelete("{teamId}")]
-        public async Task<IActionResult> DeleteTeamById([FromRoute] int featId)
+        public async Task<IActionResult> DeleteTeamById([FromRoute] int teamId)
         {
             return await _teamService.DeleteTeamByIdAsync(teamId)
                 ? Ok("Team was deleted successfully.")
-                : BadRequest("Team could not be deleted.")
+                : BadRequest("Team could not be deleted.");
         }
     }
 }
