@@ -41,7 +41,7 @@ namespace Marvel.WebAPI
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ICastCrewService, CastCrewService>();
 
-            services.AddHttpsRedirection(options => options.HttpsPort = 443);
+            // services.AddHttpsRedirection(options => options.HttpsPort = 443);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
