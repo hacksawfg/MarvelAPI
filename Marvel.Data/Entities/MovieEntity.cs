@@ -9,7 +9,7 @@ namespace Marvel.Data.Entities
     public class MovieEntity
     {
         [Key]
-        int MovieId { get; set; }
+        public int MovieId { get; set; }
         
         [Required]
         [MinLength(2, ErrorMessage = "{0} must be more than {1} characters in length.")]
@@ -26,8 +26,8 @@ namespace Marvel.Data.Entities
 
 
         //  Drawing from other tables section
-        public ICollection<TeamEntity> MovieTeams { get; set; } // to be determined if adding or not
-        public ICollection<string> MovieCharacters { get; set; }
+        public virtual ICollection<TeamEntity> MovieTeams { get; set; } // to be determined if adding or not
+        public virtual ICollection<MarvelCharacterEntity> MovieCharacters { get; set; }
         // public List<string> MovieLocations { get; set; }
     }
 }
