@@ -20,7 +20,7 @@ namespace Marvel.WebAPI.Controllers
             _movieService = movieService;
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateMovie([FromForm] MovieCreate newMovie)
         {
             if (!ModelState.IsValid)
@@ -32,14 +32,14 @@ namespace Marvel.WebAPI.Controllers
             return BadRequest("Unable to create movie");
         }
 
-        [HttpGet]
+        [HttpGet("List")]
         public async Task<IActionResult> ListAllMarvelMovies()
         {
             var movies = await _movieService.GetAllMarvelMoviesAsync();
             return Ok(movies);
         }
 
-        [HttpGet("List")]
+        [HttpGet("List/{movieId:int}")]
         public async Task<IActionResult> ListMovieById(int movieId)
         {
             var movie = await _movieService.GetMovieDetailAsync(movieId);
@@ -49,8 +49,8 @@ namespace Marvel.WebAPI.Controllers
                 : NotFound();
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateAMovieById(MovieUpdate request)
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateAMovieById([FromBody] MovieUpdate request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -60,7 +60,7 @@ namespace Marvel.WebAPI.Controllers
                 : BadRequest("Unable to update movie");
         }
 
-        [HttpDelete]
+        [HttpDelete("Delete/{movieId:int}")]
         public async Task<IActionResult> DeleteAMovie([FromRoute] int movieId)
         {
             return await _movieService.DeleteMovieByIdAsync(movieId)

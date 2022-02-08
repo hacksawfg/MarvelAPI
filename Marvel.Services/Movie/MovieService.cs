@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
 using Marvel.Models.Movie;
+using Marvel.Models.Team;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marvel.Services.Movie
@@ -36,8 +37,11 @@ namespace Marvel.Services.Movie
                     MovieName = entity.MovieName,
                     ReleaseDate = entity.ReleaseDate,
                     MovieBoxOfficeUSD = entity.MovieBoxOfficeUSD,
-                    MovieCharacters = (List<string>)entity.MovieCharacters,
-                    MovieDirector = entity.MovieDirector
+                    // MovieCharacters = entity.MovieCharacters,
+                    MovieDirector = entity.MovieDirector,
+                    MovieTeams = entity.MovieTeams.Select(t => new TeamListItem {
+                        TeamName = t.TeamName
+                    }).ToList()
                 }).ToListAsync();
             
             return movies;
