@@ -41,11 +41,12 @@ namespace Marvel.Services.Team
             .ToListAsync();
         return team;
         }
-        public async Task<TeamDetail> GetTeamByIdAsnyc(int teamId)
+        public async Task<TeamDetail> GetTeamByIdAsync(int teamId)
         {
             var teamEntity = await _ctx.Teams.FirstOrDefaultAsync(entity => entity.TeamId == teamId);
             return teamEntity is null ? null : new TeamDetail
             {
+                TeamId = teamEntity.TeamId,
                 TeamName = teamEntity.TeamName,
                 Leader = teamEntity.Leader
             };
@@ -63,16 +64,6 @@ namespace Marvel.Services.Team
             var teamEntity = await _ctx.Teams.FindAsync(teamId);
             _ctx.Teams.Remove(teamEntity);
             return await _ctx.SaveChangesAsync() == 1;
-        }
-
-        Task<IEnumerable<TeamListItem>> ITeamService.GetAllTeamsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<TeamDetail> GetTeamByIdAsync(int teamId)
-        {
-            throw new NotImplementedException();
         }
     }
 }
