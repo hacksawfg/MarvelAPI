@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Marvel.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Marvel.Data
 {
     public class MarvelDbContext : DbContext
@@ -13,5 +14,6 @@ namespace Marvel.Data
         public DbSet<CastCrewEntity> CastAndCrewMembers { get; set; }
         public DbSet<MovieEntity> Movies { get; set; }
         public DbSet<TeamEntity> Teams { get; set; }
+        public DbSet<MarvelCharacterEntity> MarvelCharacters { get; set; }
     }
 }
