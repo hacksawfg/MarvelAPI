@@ -43,13 +43,28 @@ namespace Marvel.Services.Movie
             return movies;
         }
 
+        public async Task<MovieDetail> GetMovieDetailAsync(int movieId)
+        {
+            var movie = await _context.Movies.FirstOrDefaultAsync(m => m.MovieId == movieId);
+
+            return movie is null ? null : new MovieDetail
+            {
+                MovieId = movie.MovieId,
+                MovieName = movie.MovieName,
+                MovieBoxOfficeUSD = movie.MovieBoxOfficeUSD,
+                MovieDirector = movie.MovieDirector,
+                MovieCharacters = movie.MovieCharacters,
+                MovieTeams = movie.MovieTeams
+            };
+        }
+
         public async Task<bool> UpdateAMovieByIdAsync(MovieUpdate request)
         {
             var movieUpdate = await _context.Movies.FindAsync(request.MovieId);
 
             movieUpdate.MovieName = request.MovieName;
             movieUpdate.MovieBoxOfficeUSD = request.MovieBoxOfficeUSD;
-            movieUpdate.MovieCharacters = request.MovieCharacters;
+            movieUpdate.MovieCharacters = (ICollection<MarvelCharacterEntity>)request.MovieCharacters;
             movieUpdate.MovieDirector = request.MovieDirector;
             movieUpdate.MovieTeams = (ICollection<TeamEntity>)request.MovieTeams;
 
@@ -64,7 +79,6 @@ namespace Marvel.Services.Movie
             _context.Movies.Remove(movieDelete);
             return await _context.SaveChangesAsync() == 1;
         }
-
 
     }
 }

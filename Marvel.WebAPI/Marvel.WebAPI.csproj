@@ -16,6 +16,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Marvel.Services\Marvel.Services.csproj" />
+    <ProjectReference Include="..\Marvel.Models\Marvel.Models.csproj" />
+    <ProjectReference Include="..\Marvel.Data\Marvel.Data.csproj" />
   </ItemGroup>
 
 </Project>

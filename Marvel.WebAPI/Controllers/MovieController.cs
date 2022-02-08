@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Marvel.WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class MovieController : Controller
     {
@@ -37,6 +37,35 @@ namespace Marvel.WebAPI.Controllers
         {
             var movies = await _movieService.GetAllMarvelMoviesAsync();
             return Ok(movies);
+        }
+
+        [HttpGet("List")]
+        public async Task<IActionResult> ListMovieById(int movieId)
+        {
+            var movie = await _movieService.GetMovieDetailAsync(movieId);
+
+            return movie is not null
+                ? Ok(movie)
+                : NotFound();
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateAMovieById(MovieUpdate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _movieService.UpdateAMovieByIdAsync(request)
+                ? Ok("Movie updated")
+                : BadRequest("Unable to update movie");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAMovie([FromRoute] int movieId)
+        {
+            return await _movieService.DeleteMovieByIdAsync(movieId)
+             ? Ok("Movie removed")
+             : BadRequest("Unable to delete movie");
         }
 
     }

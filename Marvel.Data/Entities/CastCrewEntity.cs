@@ -17,7 +17,7 @@ namespace Marvel.Data.Entities
         public DateTime Birthday { get; set; }
         [Required]
         public string ImdbPage { get; set; }
-        public virtual ICollection<MovieEntity> Movies { get; set; }
-        //public virtual MarvelCharacterEntity Character { get; set; }
+        public ICollection<MovieEntity> Movies { get; set; }
+        public virtual MarvelCharacterEntity Character { get; set; }
     }
 }
