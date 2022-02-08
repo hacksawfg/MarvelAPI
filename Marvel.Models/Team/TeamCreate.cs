@@ -11,12 +11,9 @@ namespace Marvel.Models.Team
     {
         [Required, MaxLength(100, ErrorMessage = "{0} must contain no more than {1} characters.")]
         public string TeamName { get; set; }
-        public ICollection<CharacterEntity> TeamMembers { get; set; }
+        // public ICollection<CharacterEntity> TeamMembers { get; set; }
         public string Leader { get; set; }
-
-        [ForeignKey(nameof(Movie_Characters))]
-        public int? MovieId { get; set; }
-        [ForeignKey(nameof(Character_Teams))]  
         public int? CharacterId { get; set; }
+        public int? MovieId { get; set; }
     }
 }

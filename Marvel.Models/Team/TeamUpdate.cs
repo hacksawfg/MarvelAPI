@@ -9,9 +9,8 @@ namespace Marvel.Models.Team
 {
     public class TeamUpdate
     {
-        [Required, MaxLength(100, ErrorMessage = "{0} must contain no more than {1} characters.")]
+        public int TeamId { get; set; }
         public string TeamName { get; set; }
         public string Leader { get; set; }
-        
     }
 }

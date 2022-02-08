@@ -10,12 +10,8 @@ namespace Marvel.Models.Team
     {
         public int TeamId { get; set; }
         public string TeamName { get; set; }
-        public ICollection<CharacterEntity> TeamMembers { get; set; }
+        // public ICollection<CharacterEntity> TeamMembers { get; set; }
         public string Leader { get; set; }
-
-        [ForeignKey(nameof(Movie_Characters))]
-        public int? MovieId { get; set; }
-        [ForeignKey(nameof(Character_Teams))]  
         public int? CharacterId { get; set; }
     }
 }
