@@ -2,10 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Marvel.Data;
+using Marvel.Services.Movie;
+using Marvel.Services.Team;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,6 +30,16 @@ namespace Marvel.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<MarvelDbContext>(options => 
+            options.UseSqlServer(connectionString));
+
+            services.AddHttpContextAccessor();
+
+            services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<ITeamService, TeamService>();
+
+            services.AddHttpsRedirection(options => options.HttpsPort = 443);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
