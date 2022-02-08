@@ -31,8 +31,12 @@ namespace Marvel.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<MarvelDbContext>(options => 
+
+            // var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            IConfigurationBuilder cBuilder = new ConfigurationBuilder().AddUserSecrets<Startup>();
+            var config = cBuilder.Build();
+            var connectionString = config["ConnectionStrings:DefaultConnection"];
+            services.AddDbContext<MarvelDbContext>(options =>
             options.UseSqlServer(connectionString));
 
             services.AddHttpContextAccessor();

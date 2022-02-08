@@ -10,7 +10,7 @@ namespace Marvel.Data.Entities
         public int TeamId { get; set; }
         [Required]
         public string TeamName { get; set; }
-        // public ICollection<MarvelCharacterEntity> TeamMembers { get; set; }
+        public ICollection<MarvelCharacterEntity> TeamMembers { get; set; }
         public string Leader { get; set; }
         }
 }
