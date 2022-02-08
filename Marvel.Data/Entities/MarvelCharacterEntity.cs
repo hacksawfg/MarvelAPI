@@ -19,6 +19,7 @@ namespace Marvel.Data
         public string Powers { get; set; }
         public string Gear { get; set; }
         public List<TeamEntity> Teams { get; set; }
+        
         [ForeignKey(nameof(Actor))]
         public int? CastCrewId { get; set; }
         public virtual CastCrewEntity Actor { get; set; }

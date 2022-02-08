@@ -4,35 +4,22 @@ using Marvel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Marvel.Data.Migrations
 {
     [DbContext(typeof(MarvelDbContext))]
-    partial class MarvelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220208194345_DatabaseJunctions")]
+    partial class DatabaseJunctions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.13")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("CastCrewEntityMovieEntity", b =>
-                {
-                    b.Property<int>("MovieCastCrewId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MoviesMovieId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MovieCastCrewId", "MoviesMovieId");
-
-                    b.HasIndex("MoviesMovieId");
-
-                    b.ToTable("CastCrewEntityMovieEntity");
-                });
 
             modelBuilder.Entity("Marvel.Data.Entities.CastCrewEntity", b =>
                 {
@@ -68,6 +55,9 @@ namespace Marvel.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CastCrewEntityId")
+                        .HasColumnType("int");
+
                     b.Property<int>("MovieBoxOfficeUSD")
                         .HasColumnType("int");
 
@@ -84,6 +74,8 @@ namespace Marvel.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("MovieId");
+
+                    b.HasIndex("CastCrewEntityId");
 
                     b.ToTable("Movies");
                 });
@@ -179,19 +171,11 @@ namespace Marvel.Data.Migrations
                     b.ToTable("MarvelCharacterEntityTeamEntity");
                 });
 
-            modelBuilder.Entity("CastCrewEntityMovieEntity", b =>
+            modelBuilder.Entity("Marvel.Data.Entities.MovieEntity", b =>
                 {
                     b.HasOne("Marvel.Data.Entities.CastCrewEntity", null)
-                        .WithMany()
-                        .HasForeignKey("MovieCastCrewId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Marvel.Data.Entities.MovieEntity", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesMovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Movies")
+                        .HasForeignKey("CastCrewEntityId");
                 });
 
             modelBuilder.Entity("Marvel.Data.Entities.TeamEntity", b =>
@@ -243,6 +227,8 @@ namespace Marvel.Data.Migrations
             modelBuilder.Entity("Marvel.Data.Entities.CastCrewEntity", b =>
                 {
                     b.Navigation("Character");
+
+                    b.Navigation("Movies");
                 });
 
             modelBuilder.Entity("Marvel.Data.Entities.MovieEntity", b =>
