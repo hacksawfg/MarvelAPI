@@ -17,7 +17,6 @@ namespace Marvel.Data
         public string Appearances { get; set; }
         public string Powers { get; set; }
         public string Gear { get; set; }
-
         public List<TeamEntity> Teams { get; set; }
         public virtual CastCrewEntity Actor { get; set; }
         public List<MovieEntity> Movies { get; set; }
