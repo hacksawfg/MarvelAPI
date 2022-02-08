@@ -10,6 +10,6 @@ namespace Marvel.Data
     public class MarvelDbContext : DbContext
     {
         public MarvelDbContext (DbContextOptions<MarvelDbContext> options) : base(options) {}
-        DbSet<CastCrewEntity> CastAndCrewMembers { get; set; }
+        public DbSet<CastCrewEntity> CastAndCrewMembers { get; set; }
     }
 }
