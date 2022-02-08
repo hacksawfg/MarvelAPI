@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Services.Movie;
+using Marvel.Services.Team;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -35,7 +36,8 @@ namespace Marvel.WebAPI
 
             services.AddHttpContextAccessor();
 
-            // services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<ITeamService, TeamService>();
 
             services.AddHttpsRedirection(options => options.HttpsPort = 443);
 
