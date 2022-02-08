@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Marvel.WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class MovieController : Controller
     {

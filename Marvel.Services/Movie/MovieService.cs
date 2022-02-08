@@ -49,7 +49,7 @@ namespace Marvel.Services.Movie
 
             movieUpdate.MovieName = request.MovieName;
             movieUpdate.MovieBoxOfficeUSD = request.MovieBoxOfficeUSD;
-            movieUpdate.MovieCharacters = request.MovieCharacters;
+            movieUpdate.MovieCharacters = (ICollection<MarvelCharacterEntity>)request.MovieCharacters;
             movieUpdate.MovieDirector = request.MovieDirector;
             movieUpdate.MovieTeams = (ICollection<TeamEntity>)request.MovieTeams;
 
