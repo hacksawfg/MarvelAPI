@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
 using Marvel.Models.Team;
+using Microsoft.EntityFrameworkCore;
 
 namespace Marvel.Services.Team
 {
@@ -31,7 +32,7 @@ namespace Marvel.Services.Team
         { 
             return await _ctx.Teams.FirstOrDefaultAsync(team => team.TeamName.ToLower() == name.ToLower()); 
         }
-        public async Task<IEnumberable<TeamListItem>> GetAllTeamsAsync()
+        public async Task<IEnumerable<TeamListItem>> GetAllTeamsAsync()
         {
             var team = await _ctx.Teams.Select(entity => new TeamListItem
             {
@@ -51,7 +52,7 @@ namespace Marvel.Services.Team
         }
         public async Task<bool> UpdateTeamByIdAsync(TeamUpdate request)
         {
-            var entity = await _ctx.Teams.FindAsync(request.Id);
+            var entity = await _ctx.Teams.FindAsync(request.TeamId);
             entity.TeamName = request.TeamName;
             entity.Leader = request.Leader;
             var changes = await _ctx.SaveChangesAsync();
