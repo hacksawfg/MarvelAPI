@@ -21,7 +21,7 @@ namespace Marvel.WebAPI.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateMovie([FromForm] MovieCreate newMovie)
+        public async Task<IActionResult> CreateMovie([FromBody] MovieCreate newMovie)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
