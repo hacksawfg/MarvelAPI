@@ -22,19 +22,19 @@ namespace Marvel.WebAPI.Controllers
             if (createResult) { return Ok("Team added to database."); }
             return BadRequest("Team could not be added.");
         }
-        [HttpGet, ProducesResponseType(typeof(IEnumerable<TeamListItem>), 1000)]
+        [HttpGet("List"), ProducesResponseType(typeof(IEnumerable<TeamListItem>), 1000)]
         public async Task<IActionResult> GetAllTeams()
         {
             var teams = await _teamService.GetAllTeamsAsync();
             return Ok(teams);
         }
-        [HttpGet("teamId")]
+        [HttpGet("Get/{teamId:int}")]
         public async Task<IActionResult> GetTeamById([FromRoute] int teamId)
         {
             var team = await _teamService.GetTeamByIdAsync(teamId);
             return team is not null ? Ok(team) : NotFound();
         }
-        [HttpPut]
+        [HttpPut("Update/{teamId:int}")]
         public async Task<IActionResult> UpdateTeamById([FromBody] TeamUpdate request)
         {
             if(!ModelState.IsValid) { return BadRequest(ModelState); }
@@ -42,7 +42,7 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok("Team updated successfully.")
                 : BadRequest("Team could not be updated.");
         }
-        [HttpDelete("{teamId}")]
+        [HttpDelete("Delete/{teamId:int}")]
         public async Task<IActionResult> DeleteTeamById([FromRoute] int teamId)
         {
             return await _teamService.DeleteTeamByIdAsync(teamId)
