@@ -56,8 +56,8 @@ namespace Marvel.WebAPI.Controllers
             var team = await _teamService.GetTeamByIdAsync(teamId);
             return team is not null ? Ok(team) : NotFound();
         }
-        [HttpGet("Get/{teamName}")]
-        public async Task<IActionResult> GetTeamByName([FromBody]string name)
+        [HttpGet("Find")]
+        public async Task<IActionResult> GetTeamByName([FromForm]string name)
         {
             var team = await _teamService.GetTeamByNameAsync(name);
 
