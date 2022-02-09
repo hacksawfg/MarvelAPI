@@ -89,5 +89,13 @@ namespace Marvel.Services.CastCrew
             _dbContext.CastAndCrewMembers.Remove(castCrewEntity);
             return await _dbContext.SaveChangesAsync() == 1;
         }
+        public async Task<bool> AddMarvelCharacterToCastCrew (int castCrewId, int marvelCharacterId)
+        {
+            var castCrewEntity = await _dbContext.CastAndCrewMembers.FindAsync(castCrewId);
+            var marvelCharacterEntity = await _dbContext.MarvelCharacters.FindAsync(marvelCharacterId);
+            castCrewEntity.Character = marvelCharacterEntity;
+            marvelCharacterEntity.Actor = castCrewEntity;
+            return await _dbContext.SaveChangesAsync() == 2;
+        }
     }
 }

@@ -27,13 +27,13 @@ namespace Marvel.WebAPI.Controllers
             if (result) { return Ok("Cast/Crew member added to database."); }
             return BadRequest("Cast/Crew member could not be added.");
         }
-        [HttpGet, ProducesResponseType(typeof(IEnumerable<CastCrewListItem>), 1000)]
+        [HttpGet("List")]
         public async Task<IActionResult> GetAllCastCrew()
         {
             var castCrewMembers = await _castCrewService.GetAllCastCrewAsync();
             return Ok(castCrewMembers);
         }
-        [HttpGet("{Id}")]
+        [HttpGet("List/{Id:int}")]
         public async Task<IActionResult> GetCastCrewById([FromRoute]int Id)
         {
             var castCrew = await _castCrewService.GetCastCrewByIdAsync(Id);
@@ -42,7 +42,7 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok(castCrew)
                 : NotFound();
         }
-        [HttpGet]
+        [HttpGet("List/{name}")]
         public async Task<IActionResult> GetCastCrewByName([FromBody]string name)
         {
             var castCrew = await _castCrewService.GetCastCrewByNameAsync(name);
@@ -51,7 +51,7 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok(castCrew)
                 : NotFound();
         }
-        [HttpPut]
+        [HttpPut("Update")]
         public async Task<IActionResult> UpdateCastCrew([FromBody] CastCrewUpdate request)
         {
             if(!ModelState.IsValid) {return BadRequest(ModelState);}
@@ -59,12 +59,20 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok("Cast/Crew member updated successfully.")
                 : BadRequest("Cast/Crew member could not be updated.");
         }
-        [HttpDelete("{Id}")]
+        [HttpDelete("Delete/{Id}")]
         public async Task<IActionResult> DeleteCastCrewById([FromRoute] int Id)
         {
             return await _castCrewService.DeleteCastCrewAsync(Id)
                 ? Ok("Cast/Crew member was deleted successfully.")
                 : BadRequest("Cast/Crew member could not be deleted.");
+        }
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateCastCrewMarvelCharacterRelatioship ([FromBody] int castCrewId, int marvelCharacterId)
+        {
+            if(!ModelState.IsValid) {return BadRequest(ModelState);}
+            return await _castCrewService.AddMarvelCharacterToCastCrew(castCrewId, marvelCharacterId)
+                ? Ok("Cast/Crew member updated successfully.")
+                : BadRequest("Cast/Crew member could not be updated.");
         }
     }
 }

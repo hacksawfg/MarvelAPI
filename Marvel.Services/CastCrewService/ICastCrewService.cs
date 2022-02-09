@@ -14,5 +14,6 @@ namespace Marvel.Services.CastCrew
         Task<CastCrewDetail> GetCastCrewByIdAsync(int id);
         Task<bool> UpdateCastCrewAsync(CastCrewUpdate request);
         Task<bool> DeleteCastCrewAsync(int castCrewId);
+        Task<bool> AddMarvelCharacterToCastCrew (int castCrewId, int marvelCharacterId);
     }
 }
