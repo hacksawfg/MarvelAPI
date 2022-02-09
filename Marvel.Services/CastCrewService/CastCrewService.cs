@@ -52,7 +52,7 @@ namespace Marvel.Services.CastCrew
                 Id = castCrewEntity.Id,
                 Name = castCrewEntity.Name,
                 Role = castCrewEntity.Role,
-                Character = castCrewEntity.Character.Name,
+                Character = castCrewEntity.Character?.Name,
                 Birthday = castCrewEntity.Birthday,
                 ImdbPage = castCrewEntity.ImdbPage,
                 Movies = castCrewEntity.Movies
@@ -67,7 +67,7 @@ namespace Marvel.Services.CastCrew
                 Id = castCrewEntity.Id,
                 Name = castCrewEntity.Name,
                 Role = castCrewEntity.Role,
-                Character = castCrewEntity.Character.Name,
+                Character = castCrewEntity.Character?.Name,
                 Birthday = castCrewEntity.Birthday,
                 ImdbPage = castCrewEntity.ImdbPage,
                 Movies = castCrewEntity.Movies

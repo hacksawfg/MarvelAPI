@@ -21,7 +21,7 @@ namespace Marvel.WebAPI.Controllers
             _marvelCharacter = marvelCharacter;
         }
 
-         [HttpPost("Create")]
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateMarvelCharacter([FromBody] MarvelCharacterCreate newMarvelCharacter)
         {
             if (!ModelState.IsValid)
