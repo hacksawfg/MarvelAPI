@@ -32,5 +32,42 @@ namespace Marvel.WebAPI.Controllers
             
             return BadRequest("Unable to create character");
         }
+
+        [HttpGet("List")]
+        public async Task<IActionResult> ListAllMarvelCharacters()
+        {
+            var marvelCharacter = await _marvelCharacter.GetAllMarvelCharactersAsync();
+            return Ok(marvelCharacter);
+        }
+
+         [HttpGet("List/{Id:int}")]
+        public async Task<IActionResult> ListMarvelCharacterById(int marvelCharacterId)
+        {
+            var marvelCharacter = await _marvelCharacter.GetMarvelCharacterDetailAsync(marvelCharacterId);
+
+            return marvelCharacter is not null
+                ? Ok(marvelCharacter)
+                : NotFound();
+        }
+
+        [HttpPut("Update")]
+        public async Task<IActionResult> UpdateMarvelCharacterById([FromBody] MarvelCharacterUpdate request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _marvelCharacter.UpdateMarvelCharacterByIdAsync(request)
+                ? Ok("Character updated")
+                : BadRequest("Unable to update character");
+        }
+
+         [HttpDelete("Delete/{Id:int}")]
+        public async Task<IActionResult> DeleteMarvelCharacter([FromRoute] int marvelCharacterId)
+        {
+            return await _marvelCharacter.DeleteMarvelCharacterByIdAsync(marvelCharacterId)
+            ? Ok("Character removed")
+            : BadRequest("Unable to delete character");
+        }
+
     }
 }
