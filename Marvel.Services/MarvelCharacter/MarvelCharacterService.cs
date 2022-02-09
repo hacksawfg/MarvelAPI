@@ -45,6 +45,22 @@ namespace Marvel.Services.MarvelCharacter
             return marvelCharacter;
         }
 
+        public async Task<MarvelCharacterDetail> GetMarvelCharacterDetailAsync(int marvelCharacterId)
+        {
+            var marvelCharacter = await _context.MarvelCharacters.FirstOrDefaultAsync(m => m.Id == marvelCharacterId);
+
+            return marvelCharacter is null ? null : new MarvelCharacterDetail
+            {
+                Id = marvelCharacter.Id,
+                Name = marvelCharacter.Name,
+                Nemesis = marvelCharacter.Nemesis,
+                TeamMembership = marvelCharacter.TeamMembership,
+                Appearances = marvelCharacter.Appearances,
+                Powers = marvelCharacter.Powers,
+                Gear = marvelCharacter.Gear
+            };
+        }
+
          public async Task<bool> UpdateMarvelCharacterByIdAsync(MarvelCharacterUpdate request)
         {
             var marvelCharacterUpdate = await _context.MarvelCharacters.FindAsync(request.Name);
@@ -57,5 +73,12 @@ namespace Marvel.Services.MarvelCharacter
             return await _context.SaveChangesAsync() == 1;
         }
 
+         public async Task<bool> DeleteMarvelCharacterByIdAsync(int marvelCharacterId)
+        {
+            var marvelCharacterDelete = await _context.MarvelCharacters.FindAsync(marvelCharacterId);
+
+            _context.MarvelCharacters.Remove(marvelCharacterDelete);
+            return await _context.SaveChangesAsync() == 1;
+        }
     }
 }
