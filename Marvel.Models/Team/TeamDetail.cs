@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Marvel.Data;
+using Marvel.Data.Entities;
 
 namespace Marvel.Models.Team
 {
@@ -12,6 +14,8 @@ namespace Marvel.Models.Team
         public string TeamName { get; set; }
         // public ICollection<CharacterEntity> TeamMembers { get; set; }
         public string Leader { get; set; }
-        public int? CharacterId { get; set; }
+        public ICollection<MarvelCharacterEntity> TeamMembers { get; set; }
+        public ICollection<MovieEntity> TeamMovies { get; set; }
+        
     }
 }
