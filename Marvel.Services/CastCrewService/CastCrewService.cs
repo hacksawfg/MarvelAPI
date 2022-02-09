@@ -73,5 +73,21 @@ namespace Marvel.Services.CastCrew
                 Movies = castCrewEntity.Movies
             };
         }
+        public async Task<bool> UpdateCastCrewAsync(CastCrewUpdate request)
+        {
+            var entity = await _dbContext.CastAndCrewMembers.FindAsync(request.Id);
+            entity.Name = request.Name;
+            entity.Role = request.Role;
+            entity.Birthday = request.Birthday;
+            entity.ImdbPage = request.ImdbPage;
+            var numberOfChanges = await _dbContext.SaveChangesAsync();
+            return numberOfChanges == 1;
+        }
+        public async Task<bool> DeleteCastCrewAsync(int castCrewId)
+        {
+            var castCrewEntity = await _dbContext.CastAndCrewMembers.FindAsync(castCrewId);
+            _dbContext.CastAndCrewMembers.Remove(castCrewEntity);
+            return await _dbContext.SaveChangesAsync() == 1;
+        }
     }
 }

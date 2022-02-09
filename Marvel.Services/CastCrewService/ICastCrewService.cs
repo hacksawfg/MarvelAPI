@@ -12,5 +12,7 @@ namespace Marvel.Services.CastCrew
         Task<IEnumerable<CastCrewListItem>> GetAllCastCrewAsync();
         Task<CastCrewDetail> GetCastCrewByNameAsync(string name);
         Task<CastCrewDetail> GetCastCrewByIdAsync(int id);
+        Task<bool> UpdateCastCrewAsync(CastCrewUpdate request);
+        Task<bool> DeleteCastCrewAsync(int castCrewId);
     }
 }
