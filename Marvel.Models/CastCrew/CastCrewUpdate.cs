@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Marvel.Data;
 using Marvel.Data.Entities;
 
 namespace Marvel.Models.CastCrew
@@ -16,7 +17,7 @@ namespace Marvel.Models.CastCrew
         public DateTime Birthday { get; set; }
         [Required]
         public string ImdbPage { get; set; }
-        public virtual ICollection<MovieEntity> Movies { get; set; }
+        //public  ICollection<MovieEntity> Movies { get; set; }
         //public virtual MarvelCharacterEntity Character { get; set; }
     }
 }

@@ -9,6 +9,8 @@ namespace Marvel.Services.CastCrew
     public interface ICastCrewService
     {
         Task<bool> AddCastCrew(CastCrewCreate request);
-        Task<CastCrewDetail> GetCastCrewByName(string name);
+        Task<IEnumerable<CastCrewListItem>> GetAllCastCrewAsync();
+        Task<CastCrewDetail> GetCastCrewByNameAsync(string name);
+        Task<CastCrewDetail> GetCastCrewByIdAsync(int id);
     }
 }
