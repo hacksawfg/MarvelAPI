@@ -18,7 +18,7 @@ namespace Marvel.Services.Team
         }
         public async Task<bool> CreateTeamAsync(TeamCreate model)
         {
-            if (await GetTeamByNameAsync(model.TeamName) != null) return false; 
+            if (await GetTeamByNameHelperAsync(model.TeamName) != null) return false; 
             var entity = new TeamEntity
             {
                 TeamName = model.TeamName,
@@ -28,7 +28,7 @@ namespace Marvel.Services.Team
             var numberOfChanges = await _ctx.SaveChangesAsync();
             return numberOfChanges == 1;
         }
-        public async Task<TeamEntity> GetTeamByNameAsync(string name)
+        public async Task<TeamEntity> GetTeamByNameHelperAsync(string name)
         { 
             return await _ctx.Teams.FirstOrDefaultAsync(team => team.TeamName.ToLower() == name.ToLower()); 
         }
@@ -51,6 +51,17 @@ namespace Marvel.Services.Team
                 Leader = teamEntity.Leader
             };
         }
+        public async Task<TeamDetail> GetTeamByNameAsync(string name)
+        {
+            var team = await _ctx.Teams.FirstOrDefaultAsync(t => 
+                t.TeamName.ToLower() == name.ToLower());
+            return team is null ? null : new TeamDetail
+            {
+                TeamId = team.TeamId,
+                TeamName = team.TeamName,
+                Leader = team.Leader
+            };
+        }
         public async Task<bool> UpdateTeamByIdAsync(TeamUpdate request)
         {
             var entity = await _ctx.Teams.FindAsync(request.TeamId);
@@ -64,6 +75,30 @@ namespace Marvel.Services.Team
             var teamEntity = await _ctx.Teams.FindAsync(teamId);
             _ctx.Teams.Remove(teamEntity);
             return await _ctx.SaveChangesAsync() == 1;
+        }
+        public async Task<bool> AddTeamToCharacterAsync(int teamId, AddTeamToCharacter request)
+        {
+            var entity = await _ctx.MarvelCharacters.FindAsync(request.CharacterId);
+
+            if (request.TeamId == teamId)
+            {
+                entity.Id = request.CharacterId;
+                var numberOfChanges = await _ctx.SaveChangesAsync();
+                return numberOfChanges == 1;
+            }
+            return false;
+        }
+        public async Task<bool> AddTeamToMovieAsyc(int teamId, AddTeamToMovie request)
+        {
+            var entity = await _ctx.Movies.FindAsync(request.MovieId);
+
+            if (request.TeamId == teamId)
+            {
+                entity.MovieId = request.MovieId;
+                var numberOfChanges = await _ctx.SaveChangesAsync();
+                return numberOfChanges == 1;
+            }
+            return false;
         }
     }
 }
