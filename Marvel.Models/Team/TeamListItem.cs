@@ -7,6 +7,7 @@ namespace Marvel.Models.Team
 {
     public class TeamListItem
     {
+        public int TeamId { get; set; }
         public string TeamName { get; set; }
     }
 }
