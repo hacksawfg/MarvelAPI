@@ -19,7 +19,7 @@ namespace Marvel.Models.CastCrew
         public DateTime Birthday { get; set; }
         [Required]
         public string ImdbPage { get; set; }
-        //public  ICollection<MovieEntity> Movies { get; set; }
-        //public virtual MarvelCharacterEntity Character { get; set; }
+        public  ICollection<MovieEntity> Movies { get; set; }
+        public  MarvelCharacterEntity Character { get; set; }
     }
 }
