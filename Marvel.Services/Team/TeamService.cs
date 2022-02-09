@@ -77,29 +77,32 @@ namespace Marvel.Services.Team
             _ctx.Teams.Remove(teamEntity);
             return await _ctx.SaveChangesAsync() == 1;
         }
-        // public async Task<bool> AddTeamToCharacterAsync(int teamId, AddTeamToCharacter request)
-        // {
-        //     var entity = await _ctx.MarvelCharacters.FindAsync(request.CharacterId);
+        public async Task<bool> AddTeamToCharacterAsync(int teamId, AddTeamToCharacter request)
+        {
+            var entity = await _ctx.MarvelCharacters.FindAsync(request.CharacterId);
 
-        //     if (request.TeamId == teamId)
-        //     {
-        //         entity.Id = request.CharacterId;
-        //         var numberOfChanges = await _ctx.SaveChangesAsync();
-        //         return numberOfChanges == 1;
-        //     }
-        //     return false;
-        // }
-        // public async Task<bool> AddTeamToMovieAsyc(int teamId, AddTeamToMovie request)
-        // {
-        //     var entity = await _ctx.Movies.FindAsync(request.MovieId);
+            if (request.TeamId == teamId)
+            {
+                entity.Id = request.CharacterId;
+                var numberOfChanges = await _ctx.SaveChangesAsync();
+                return numberOfChanges == 1;
+            }
+            return false;
+        }
+        public async Task<bool> AddTeamToMovieAsync(int teamId, AddTeamToMovie request)
+        {
+            var teamEntity = await _ctx.Teams.FindAsync(request.TeamId);
+            var movieEntity = await _ctx.Movies
+                .Include(m => m.MovieTeams)
+                .FirstOrDefaultAsync(m => m.MovieId == request.MovieId);
 
-        //     if (request.TeamId == teamId)
-        //     {
-        //         entity.MovieId = request.TeamId;
-        //         var numberOfChanges = await _ctx.SaveChangesAsync();
-        //         return numberOfChanges == 1;
-        //     }
-        //     return false;
-        // }
+            if (request.TeamId == teamId)
+            {
+                movieEntity.MovieTeams.Add(teamEntity);
+                var numberOfChanges = await _ctx.SaveChangesAsync();
+                return numberOfChanges == 1;
+            }
+            return false;
+        }
     }
 }

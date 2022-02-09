@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
+using Marvel.Models.MarvelCharacter;
+using Marvel.Models.Team;
 
 namespace Marvel.Models.Movie
 {
@@ -14,7 +16,7 @@ namespace Marvel.Models.Movie
         public DateTime ReleaseDate { get; set; }
         public double MovieBoxOfficeUSD { get; set; }
         public string MovieDirector { get; set; }
-        public ICollection<TeamEntity> MovieTeams { get; set; }
-        public ICollection<MarvelCharacterEntity> MovieCharacters { get; set; }
+        public ICollection<TeamListItem> MovieTeams { get; set; }
+        public ICollection<MarvelCharacterList> MovieCharacters { get; set; }
     }
 }

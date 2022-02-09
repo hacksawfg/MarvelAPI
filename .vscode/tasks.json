@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Marvel.Tests/Marvel.Tests.csproj",
+                "${workspaceFolder}/Marvel.WebAPI/Marvel.WebAPI.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
