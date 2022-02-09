@@ -4,14 +4,16 @@ using Marvel.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Marvel.Data.Migrations
 {
     [DbContext(typeof(MarvelDbContext))]
-    partial class MarvelDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220209160234_MoreDatabaseJunctions")]
+    partial class MoreDatabaseJunctions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
