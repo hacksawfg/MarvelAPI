@@ -54,7 +54,7 @@ namespace Marvel.WebAPI.Controllers
         [HttpPut]
         public async Task<IActionResult> UpdateCastCrew([FromBody] CastCrewUpdate request)
         {
-            if(!ModelState.IsValid) { return BadRequest(ModelState); }
+            if(!ModelState.IsValid) {return BadRequest(ModelState);}
             return await _castCrewService.UpdateCastCrewAsync(request)
                 ? Ok("Cast/Crew member updated successfully.")
                 : BadRequest("Cast/Crew member could not be updated.");
