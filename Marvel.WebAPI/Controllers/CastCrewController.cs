@@ -51,6 +51,20 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok(castCrew)
                 : NotFound();
         }
-        
+        [HttpPut]
+        public async Task<IActionResult> UpdateCastCrew([FromBody] CastCrewUpdate request)
+        {
+            if(!ModelState.IsValid) { return BadRequest(ModelState); }
+            return await _castCrewService.UpdateCastCrewAsync(request)
+                ? Ok("Cast/Crew member updated successfully.")
+                : BadRequest("Cast/Crew member could not be updated.");
+        }
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteCastCrewById([FromRoute] int Id)
+        {
+            return await _castCrewService.DeleteCastCrewAsync(Id)
+                ? Ok("Cast/Crew member was deleted successfully.")
+                : BadRequest("Cast/Crew member could not be deleted.");
+        }
     }
 }
