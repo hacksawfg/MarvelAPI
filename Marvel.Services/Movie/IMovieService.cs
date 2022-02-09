@@ -10,6 +10,8 @@ namespace Marvel.Services.Movie
     {
         public Task<bool> CreateMarvelMovieAsync(MovieCreate newMovie);
         public Task<ICollection<MovieListItem>> GetAllMarvelMoviesAsync();
-        Task<bool> UpdateAMovieByIdAsync(MovieUpdate request);
+        public Task<MovieDetail> GetMovieDetailAsync(int movieId);
+        public Task<bool> UpdateAMovieByIdAsync(MovieUpdate request);
+        public Task<bool> DeleteMovieByIdAsync(int movieId);
     }
 }

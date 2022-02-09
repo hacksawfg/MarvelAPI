@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
 using Marvel.Models.Movie;
+using Marvel.Models.Team;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marvel.Services.Movie
@@ -36,11 +37,29 @@ namespace Marvel.Services.Movie
                     MovieName = entity.MovieName,
                     ReleaseDate = entity.ReleaseDate,
                     MovieBoxOfficeUSD = entity.MovieBoxOfficeUSD,
-                    MovieCharacters = (List<string>)entity.MovieCharacters,
-                    MovieDirector = entity.MovieDirector
+                    // MovieCharacters = entity.MovieCharacters,
+                    MovieDirector = entity.MovieDirector,
+                    MovieTeams = entity.MovieTeams.Select(t => new TeamListItem {
+                        TeamName = t.TeamName
+                    }).ToList()
                 }).ToListAsync();
             
             return movies;
+        }
+
+        public async Task<MovieDetail> GetMovieDetailAsync(int movieId)
+        {
+            var movie = await _context.Movies.FirstOrDefaultAsync(m => m.MovieId == movieId);
+
+            return movie is null ? null : new MovieDetail
+            {
+                MovieId = movie.MovieId,
+                MovieName = movie.MovieName,
+                MovieBoxOfficeUSD = movie.MovieBoxOfficeUSD,
+                MovieDirector = movie.MovieDirector,
+                MovieCharacters = movie.MovieCharacters,
+                MovieTeams = movie.MovieTeams
+            };
         }
 
         public async Task<bool> UpdateAMovieByIdAsync(MovieUpdate request)
@@ -64,7 +83,6 @@ namespace Marvel.Services.Movie
             _context.Movies.Remove(movieDelete);
             return await _context.SaveChangesAsync() == 1;
         }
-
 
     }
 }
