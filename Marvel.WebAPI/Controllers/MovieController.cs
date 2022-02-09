@@ -64,8 +64,8 @@ namespace Marvel.WebAPI.Controllers
         public async Task<IActionResult> DeleteAMovie([FromRoute] int movieId)
         {
             return await _movieService.DeleteMovieByIdAsync(movieId)
-             ? Ok("Movie removed")
-             : BadRequest("Unable to delete movie");
+            ? Ok("Movie removed")
+            : BadRequest("Unable to delete movie");
         }
 
     }

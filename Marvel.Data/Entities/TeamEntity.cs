@@ -11,6 +11,7 @@ namespace Marvel.Data.Entities
         [Required]
         public string TeamName { get; set; }
         public ICollection<MarvelCharacterEntity> TeamMembers { get; set; }
+        public ICollection<MovieEntity> TeamMovies { get; set; }
         public string Leader { get; set; }
         }
 }
