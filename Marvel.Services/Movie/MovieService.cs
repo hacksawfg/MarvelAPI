@@ -49,7 +49,9 @@ namespace Marvel.Services.Movie
 
         public async Task<MovieDetail> GetMovieDetailAsync(int movieId)
         {
-            var movie = await _context.Movies.FirstOrDefaultAsync(m => m.MovieId == movieId);
+            var movie = await _context.Movies
+            .Include(t => t.MovieTeams)
+            .FirstOrDefaultAsync(m => m.MovieId == movieId);
 
             return movie is null ? null : new MovieDetail
             {
@@ -57,8 +59,11 @@ namespace Marvel.Services.Movie
                 MovieName = movie.MovieName,
                 MovieBoxOfficeUSD = movie.MovieBoxOfficeUSD,
                 MovieDirector = movie.MovieDirector,
-                MovieCharacters = movie.MovieCharacters,
-                MovieTeams = movie.MovieTeams
+                // MovieCharacters = movie.MovieCharacters,
+                MovieTeams = movie.MovieTeams.Select(t => new TeamListItem {
+                    TeamId = t.TeamId,
+                    TeamName = t.TeamName
+                }).ToList()
             };
         }
 
