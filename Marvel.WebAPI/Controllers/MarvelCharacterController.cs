@@ -40,7 +40,7 @@ namespace Marvel.WebAPI.Controllers
             return Ok(marvelCharacter);
         }
 
-         [HttpGet("List/{Id:int}")]
+         [HttpGet("List/{marvelCharacterId:int}")]
         public async Task<IActionResult> ListMarvelCharacterById(int marvelCharacterId)
         {
             var marvelCharacter = await _marvelCharacter.GetMarvelCharacterDetailAsync(marvelCharacterId);
@@ -61,7 +61,7 @@ namespace Marvel.WebAPI.Controllers
                 : BadRequest("Unable to update character");
         }
 
-         [HttpDelete("Delete/{Id:int}")]
+         [HttpDelete("Delete/{marvelCharacterId:int}")]
         public async Task<IActionResult> DeleteMarvelCharacter([FromRoute] int marvelCharacterId)
         {
             return await _marvelCharacter.DeleteMarvelCharacterByIdAsync(marvelCharacterId)
