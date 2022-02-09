@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Services.CastCrew;
+using Marvel.Services.MarvelCharacter;
 using Marvel.Services.Movie;
 using Marvel.Services.Team;
 using Microsoft.AspNetCore.Builder;
@@ -44,6 +45,7 @@ namespace Marvel.WebAPI
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<ITeamService, TeamService>();
             services.AddScoped<ICastCrewService, CastCrewService>();
+            services.AddScoped<IMarvelCharacterService, MarvelCharacterService>();
 
             services.AddHttpsRedirection(options => options.HttpsPort = 443);
 
