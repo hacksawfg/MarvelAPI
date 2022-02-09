@@ -65,6 +65,72 @@ Deleting an item utilizes the integer index in combination with an http DELETE r
 
 
 ---
+
+## Example JSON Structures for Updating Data
+
+Movie
+* Required fields - movieId, movieName
+* Optional fields information
+    * releaseDate format (YYYY-MM-DDThh:mm:ss)
+    * movieBoxOffice - double to facilitate using exponents in value (i.e. 1.214e9)
+    * movieTeams, movieCharacters are populated & edited from other tables
+
+
+```
+{
+    "movieId": 1,
+    "movieName": "Iron Man",
+    "releaseDate": "2008-05-02T00:00:00",
+    "movieBoxOfficeUSD": 1.214e9,
+    "movieDirector":"Jon Favreau",
+    "movieTeams": null,
+    "movieCharacters": null
+}
+```
+Team
+* Required fields - teamId, teamName
+* Optional fields information
+    * releaseDate format (YYYY-MM-DDThh:mm:ss)
+    * movieBoxOffice - double to facilitate using exponents in value (i.e. 1.214e9)
+    * movieTeams, movieCharacters are populated & edited from other tables
+
+```
+{
+    "teamId": 1,
+    "teamName":"Avengers",
+    "leader":"Captain America"
+}
+```
+
+Character
+* Required fields - 
+* Optional fields information
+    * a
+```
+{
+    
+}
+```
+
+
+CastCrew
+* Required fields - name, role, ImdbPage
+* Optional fields information
+    * birthday format (YYYY-MM-DDThh:mm:ss)
+    * movies pulled from separate table
+```
+{
+    "name":"Jon Favreau",
+    "role":"Happy Hogan",
+    "birthday":"1966-10-19T00:00:00",
+    "ImdbPage":"https://www.imdb.com/name/nm0269463/",
+    "movies":null
+}
+```
+
+
+
+---
 Team Members
 * Dan Ficklin
 * Alan Murugan

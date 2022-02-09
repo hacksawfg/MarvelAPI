@@ -12,7 +12,7 @@ namespace Marvel.Models.Movie
         public int MovieId { get; set; }
         public string MovieName { get; set; }
         public DateTime ReleaseDate { get; set; }
-        public int MovieBoxOfficeUSD { get; set; }
+        public double MovieBoxOfficeUSD { get; set; }
         public ICollection<string> MovieCharacters { get; set; }
         public string MovieDirector { get; set; }
         public ICollection<TeamEntity> MovieTeams { get; set; }

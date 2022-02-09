@@ -18,7 +18,7 @@ namespace Marvel.Data.Entities
 
         public DateTime ReleaseDate { get; set; }
 
-        public int MovieBoxOfficeUSD { get; set; }
+        public double MovieBoxOfficeUSD { get; set; }
 
         [MinLength(2, ErrorMessage = "{0} must be more than {1} characters in length.")]
         [MaxLength(100, ErrorMessage = "{0} must be less than {1} characters in length.")]
