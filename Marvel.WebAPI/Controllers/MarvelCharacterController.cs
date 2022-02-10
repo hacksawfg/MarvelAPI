@@ -69,5 +69,17 @@ namespace Marvel.WebAPI.Controllers
             : BadRequest("Unable to delete character");
         }
 
+         [HttpPut("AddToMovie/{marvelCharacterId:int}")]
+        public async Task<IActionResult> AddMarvelCharacterToMovie([FromRoute] int Id, [FromBody] AddMarvelCharacterToMovie request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return await _marvelCharacter.AddMarvelCharacterToMovieAsync(Id, request)
+                ? Ok("Cast/Crew member was added to the movie's details successfully!")
+                : BadRequest("Cast/Crew member could not be added to the movie's details.");
+        }
+
     }
 }

@@ -82,13 +82,20 @@ namespace Marvel.Services.MarvelCharacter
             return await _context.SaveChangesAsync() == 1;
         }
 
-           public async Task<bool> AddMarvelCharacterToMovie (int movieId, int marvelCharacterId)
+        public async Task<bool> AddMarvelCharacterToMovieAsync(int Id, AddMarvelCharacterToMovie request)
         {
-            var movieEntity = await _context.CastAndCrewMembers.FindAsync(movieId);
-            var marvelCharacterEntity = await _context.MarvelCharacters.FindAsync(marvelCharacterId);
-            movieEntity.Character = marvelCharacterEntity;
-            marvelCharacterEntity.Actor = movieEntity;
-            return await _context.SaveChangesAsync() == 2;
+            var marvelCharacterEntity = await _context.MarvelCharacters.FindAsync(request.Id);
+            var movieEntity = await _context.Movies
+                .Include(m => m.MovieTeams)
+                .FirstOrDefaultAsync(m => m.MovieId == request.MovieId);
+
+            if (request.Id == Id)
+            {
+                movieEntity.MovieCharacters.Add(marvelCharacterEntity);
+                var numberOfChanges = await _context.SaveChangesAsync();
+                return numberOfChanges == 1;
+            }
+            return false;
         }
     }
 }
