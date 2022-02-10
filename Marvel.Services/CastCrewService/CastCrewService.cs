@@ -88,13 +88,27 @@ namespace Marvel.Services.CastCrew
             _dbContext.CastAndCrewMembers.Remove(castCrewEntity);
             return await _dbContext.SaveChangesAsync() == 1;
         }
-        public async Task<bool> AddMarvelCharacterToCastCrew (int castCrewId, int marvelCharacterId)
+        public async Task<bool> AddCastCrewToMovieAsync(int castCrewId, AddCastCrewToMovie request)
+        {
+            var castCrewEntity = await _dbContext.CastAndCrewMembers.FindAsync(request.CastCrewId);
+            var movieEntity = await _dbContext.Movies
+                .Include(m => m.MovieTeams)
+                .FirstOrDefaultAsync(m => m.MovieId == request.MovieId);
+
+            if (request.CastCrewId == castCrewId)
+            {
+                movieEntity.MovieCastCrew.Add(castCrewEntity);
+                var numberOfChanges = await _dbContext.SaveChangesAsync();
+                return numberOfChanges == 1;
+            }
+            return false;
+        }
+        public async Task<bool> AddCastCrewToMarvelCharacter(int castCrewId, int marvelCharacterId)
         {
             var castCrewEntity = await _dbContext.CastAndCrewMembers.FindAsync(castCrewId);
             var marvelCharacterEntity = await _dbContext.MarvelCharacters.FindAsync(marvelCharacterId);
-            castCrewEntity.Character = marvelCharacterEntity;
             marvelCharacterEntity.Actor = castCrewEntity;
-            return await _dbContext.SaveChangesAsync() == 2;
+            return await _dbContext.SaveChangesAsync() == 1;
         }
     }
 }
