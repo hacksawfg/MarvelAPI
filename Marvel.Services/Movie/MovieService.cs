@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
+using Marvel.Models.CastCrew;
+using Marvel.Models.MarvelCharacter;
 using Marvel.Models.Movie;
 using Marvel.Models.Team;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +54,8 @@ namespace Marvel.Services.Movie
         {
             var movie = await _context.Movies
             .Include(t => t.MovieTeams)
+            .Include(c => c.MovieCharacters)
+            .Include(k => k.MovieCastCrew)
             .FirstOrDefaultAsync(m => m.MovieId == movieId);
 
             return movie is null ? null : new MovieDetail
@@ -60,11 +64,20 @@ namespace Marvel.Services.Movie
                 MovieName = movie.MovieName,
                 MovieBoxOfficeUSD = movie.MovieBoxOfficeUSD,
                 MovieDirector = movie.MovieDirector,
-                // MovieCharacters = movie.MovieCharacters,
+                MovieCharacters = movie.MovieCharacters.Select(c => new MarvelCharacterList {
+                    Id = c.Id,
+                    Name = c.Name
+                }).ToList(),
                 MovieTeams = movie.MovieTeams.Select(t => new TeamListItem {
                     TeamId = t.TeamId,
                     TeamName = t.TeamName
+                }).ToList(),
+                MovieCastCrew = movie.MovieCastCrew.Select(k => new CastCrewListItem {
+                    Id = k.Id,
+                    Name = k.Name,
+                    Role = k.Role
                 }).ToList()
+
             };
         }
 
