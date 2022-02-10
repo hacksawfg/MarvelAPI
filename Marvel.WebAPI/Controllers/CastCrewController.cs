@@ -33,7 +33,8 @@ namespace Marvel.WebAPI.Controllers
             var castCrewMembers = await _castCrewService.GetAllCastCrewAsync();
             return Ok(castCrewMembers);
         }
-        [HttpGet("List/{Id:int}")]
+        [HttpGet]
+        [Route("GetById/{Id:int}")]
         public async Task<IActionResult> GetCastCrewById([FromRoute]int Id)
         {
             var castCrew = await _castCrewService.GetCastCrewByIdAsync(Id);
@@ -42,8 +43,8 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok(castCrew)
                 : NotFound();
         }
-        [HttpGet("List/{name}")]
-        public async Task<IActionResult> GetCastCrewByName([FromBody]string name)
+        [HttpGet("GetByName")]
+        public async Task<IActionResult> GetCastCrewByName([FromForm]string name)
         {
             var castCrew = await _castCrewService.GetCastCrewByNameAsync(name);
 
@@ -66,13 +67,13 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok("Cast/Crew member was deleted successfully.")
                 : BadRequest("Cast/Crew member could not be deleted.");
         }
-        [HttpPut("Update/{castCrewId}/{marvelCharacterId}")]
-        public async Task<IActionResult> UpdateCastCrewMarvelCharacterRelatioship ([FromRoute] int castCrewId, [FromRoute] int marvelCharacterId)
-        {
-            if(!ModelState.IsValid) {return BadRequest(ModelState);}
-            return await _castCrewService.AddMarvelCharacterToCastCrew(castCrewId, marvelCharacterId)
-                ? Ok("Cast/Crew member updated successfully.")
-                : BadRequest("Cast/Crew member could not be updated.");
-        }
+        // [HttpPut("Update")]
+        // public async Task<IActionResult> UpdateCastCrewMarvelCharacterRelatioship ([FromBody] int castCrewId, int marvelCharacterId)
+        // {
+        //     if(!ModelState.IsValid) {return BadRequest(ModelState);}
+        //     return await _castCrewService.AddMarvelCharacterToCastCrew(castCrewId, marvelCharacterId)
+        //         ? Ok("Cast/Crew member updated successfully.")
+        //         : BadRequest("Cast/Crew member could not be updated.");
+        // }
     }
 }
