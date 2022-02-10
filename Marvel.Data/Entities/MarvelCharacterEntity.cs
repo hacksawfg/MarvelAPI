@@ -22,10 +22,7 @@ namespace Marvel.Data
         public string Appearances { get; set; }
         public string Powers { get; set; }
         public string Gear { get; set; }
-
-        
         public ICollection<TeamEntity> Teams { get; set; }
-        
         [ForeignKey(nameof(Actor))]
         public int? CastCrewId { get; set; }
         public virtual CastCrewEntity Actor { get; set; }

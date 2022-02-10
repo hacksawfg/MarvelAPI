@@ -55,6 +55,9 @@ namespace Marvel.Services.Team
                 Leader = teamEntity.Leader,
                 TeamMovies = teamEntity.TeamMovies.Select(t => new MovieListItem {
                     MovieName = t.MovieName
+                }).ToList(),
+                TeamMembers = teamEntity.TeamMembers.Select(m => new TeamListItem {
+                    TeamName = m.Name
                 }).ToList()
             };
         }
