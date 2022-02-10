@@ -79,15 +79,15 @@ namespace Marvel.WebAPI.Controllers
                 : BadRequest("Cast/Crew member could not be added to the movie's details.");
         }
         [HttpPut("SetActorToCharacter")]
-        public async Task<IActionResult> SetActorToCharacter([FromBody]int castCrewId, [FromBody]int marvelCharacterId)
+        public async Task<IActionResult> SetActorToCharacter([FromBody]AddActorToCharacter request)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            return await _castCrewService.SetCastCrewToMarvelCharacter(castCrewId, marvelCharacterId)
+            return await _castCrewService.SetCastCrewToMarvelCharacter(request.CastCrewId, request.MarvelCharacterId)
                 ? Ok("Cast/Crew member linked to Marvel Character successfully!")
-                : BadRequest("Cast/Crew member could not be linked to Marcel Character.");
+                : BadRequest("Cast/Crew member could not be linked to Marvel Character.");
         }
     }
 }

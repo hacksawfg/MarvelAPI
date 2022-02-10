@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Marvel.Data;
+using Marvel.Models.CastCrew;
 using Marvel.Models.MarvelCharacter;
 using Marvel.Models.Movie;
 using Marvel.Models.Team;
@@ -47,7 +48,7 @@ namespace Marvel.Services.MarvelCharacter
 
         public async Task<MarvelCharacterDetail> GetMarvelCharacterDetailAsync(int marvelCharacterId)
         {
-            var marvelCharacter = await _context.MarvelCharacters.Include(m => m.Movies).Include(t => t.Teams).FirstOrDefaultAsync(c => c.Id == marvelCharacterId);
+            var marvelCharacter = await _context.MarvelCharacters.Include(m => m.Movies).Include(t => t.Teams).Include(a => a.Actor).FirstOrDefaultAsync(c => c.Id == marvelCharacterId);
 
             return marvelCharacter is null ? null : new MarvelCharacterDetail
             {
@@ -62,7 +63,11 @@ namespace Marvel.Services.MarvelCharacter
                     MovieName = m.MovieName
                 }).ToList(),
                 Powers = marvelCharacter.Powers,
-                Gear = marvelCharacter.Gear
+                Gear = marvelCharacter.Gear,
+                Actor = new CastCrewListItem {
+                    Id = (int)marvelCharacter.CastCrewId,
+                    Name = marvelCharacter.Actor.Name,
+                }
             };
         }
         public async Task<bool> UpdateMarvelCharacterByIdAsync(MarvelCharacterUpdate request)
@@ -83,14 +88,14 @@ namespace Marvel.Services.MarvelCharacter
             _context.MarvelCharacters.Remove(marvelCharacterDelete);
             return await _context.SaveChangesAsync() == 1;
         }
-        public async Task<bool> AddMarvelCharacterToMovieAsync(int Id, AddMarvelCharacterToMovie request)
+        public async Task<bool> AddMarvelCharacterToMovieAsync(int characterId, AddMarvelCharacterToMovie request)
         {
             var marvelCharacterEntity = await _context.MarvelCharacters.FindAsync(request.Id);
             var movieEntity = await _context.Movies
-                .Include(m => m.MovieTeams)
+                .Include(m => m.MovieCharacters)
                 .FirstOrDefaultAsync(m => m.MovieId == request.MovieId);
 
-            if (request.Id == Id)
+            if (request.Id == characterId)
             {
                 movieEntity.MovieCharacters.Add(marvelCharacterEntity);
                 var numberOfChanges = await _context.SaveChangesAsync();

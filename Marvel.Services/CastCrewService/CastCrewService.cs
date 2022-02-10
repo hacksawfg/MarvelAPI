@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
 using Marvel.Models.CastCrew;
+using Marvel.Models.MarvelCharacter;
 using Marvel.Models.Movie;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,7 +54,10 @@ namespace Marvel.Services.CastCrew
                 Id = castCrewEntity.Id,
                 Name = castCrewEntity.Name,
                 Role = castCrewEntity.Role,
-                Character = castCrewEntity.Character?.Name,
+                CharacterPlayed = new MarvelCharacterList {
+                    Id = castCrewEntity.Character.Id,
+                    Name = castCrewEntity.Character.Name
+                },
                 Birthday = castCrewEntity.Birthday,
                 ImdbPage = castCrewEntity.ImdbPage,
                 Movies = castCrewEntity.Movies.Select(m => new MovieListItem {
@@ -63,14 +67,17 @@ namespace Marvel.Services.CastCrew
         }
         public async Task<CastCrewDetail> GetCastCrewByIdAsync(int id)
         {
-            var castCrewEntity = await _dbContext.CastAndCrewMembers.Include(m => m.Movies).FirstOrDefaultAsync(e => 
+            var castCrewEntity = await _dbContext.CastAndCrewMembers.Include(m => m.Movies).Include(c => c.Character).FirstOrDefaultAsync(e => 
                 e.Id == id);
             return castCrewEntity is null ? null : new CastCrewDetail
             {
                 Id = castCrewEntity.Id,
                 Name = castCrewEntity.Name,
                 Role = castCrewEntity.Role,
-                Character = castCrewEntity.Character?.Name,
+                CharacterPlayed = new MarvelCharacterList {
+                    Id = castCrewEntity.Character.Id,
+                    Name = castCrewEntity.Character.Name
+                },
                 Birthday = castCrewEntity.Birthday,
                 ImdbPage = castCrewEntity.ImdbPage,
                 Movies = castCrewEntity.Movies.Select(m => new MovieListItem {
@@ -113,7 +120,10 @@ namespace Marvel.Services.CastCrew
             var castCrewEntity = await _dbContext.CastAndCrewMembers.FindAsync(castCrewId);
             var marvelCharacterEntity = await _dbContext.MarvelCharacters.FindAsync(marvelCharacterId);
             marvelCharacterEntity.Actor = castCrewEntity;
-            return await _dbContext.SaveChangesAsync() == 2;
+            // marvelCharacterEntity.Actor.Add(castCrewEntity);
+            marvelCharacterEntity = castCrewEntity.Character;
+            var numberOfChanges = await _dbContext.SaveChangesAsync();
+            return numberOfChanges >= 1;
         }
     }
 }
