@@ -67,13 +67,16 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok("Cast/Crew member was deleted successfully.")
                 : BadRequest("Cast/Crew member could not be deleted.");
         }
-        // [HttpPut("Update")]
-        // public async Task<IActionResult> UpdateCastCrewMarvelCharacterRelatioship ([FromBody] int castCrewId, int marvelCharacterId)
-        // {
-        //     if(!ModelState.IsValid) {return BadRequest(ModelState);}
-        //     return await _castCrewService.AddMarvelCharacterToCastCrew(castCrewId, marvelCharacterId)
-        //         ? Ok("Cast/Crew member updated successfully.")
-        //         : BadRequest("Cast/Crew member could not be updated.");
-        // }
+        [HttpPut("AddToMovie/{castCrewId:int}")]
+        public async Task<IActionResult> AddCastCrewToMovie([FromRoute] int castCrewId, [FromBody] AddCastCrewToMovie request)
+        {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return await _castCrewService.AddCastCrewToMovieAsync(castCrewId, request)
+                ? Ok("Cast/Crew member was added to the movie's details successfully!")
+                : BadRequest("Cast/Crew member could not be added to the movie's details.");
+        }
     }
 }
