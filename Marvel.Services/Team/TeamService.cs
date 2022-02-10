@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
+using Marvel.Models.Movie;
 using Marvel.Models.Team;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,12 +45,17 @@ namespace Marvel.Services.Team
         }
         public async Task<TeamDetail> GetTeamByIdAsync(int teamId)
         {
-            var teamEntity = await _ctx.Teams.FirstOrDefaultAsync(entity => entity.TeamId == teamId);
+            var teamEntity = await _ctx.Teams
+            .Include(t => t.TeamMovies)
+            .FirstOrDefaultAsync(entity => entity.TeamId == teamId);
             return teamEntity is null ? null : new TeamDetail
             {
                 TeamId = teamEntity.TeamId,
                 TeamName = teamEntity.TeamName,
-                Leader = teamEntity.Leader
+                Leader = teamEntity.Leader,
+                TeamMovies = teamEntity.TeamMovies.Select(t => new MovieListItem {
+                    MovieName = t.MovieName
+                }).ToList()
             };
         }
         public async Task<TeamDetail> GetTeamByNameAsync(string name)
