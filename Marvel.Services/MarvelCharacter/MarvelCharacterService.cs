@@ -81,5 +81,14 @@ namespace Marvel.Services.MarvelCharacter
             _context.MarvelCharacters.Remove(marvelCharacterDelete);
             return await _context.SaveChangesAsync() == 1;
         }
+
+           public async Task<bool> AddMarvelCharacterToMovie (int movieId, int marvelCharacterId)
+        {
+            var movieEntity = await _context.CastAndCrewMembers.FindAsync(movieId);
+            var marvelCharacterEntity = await _context.MarvelCharacters.FindAsync(marvelCharacterId);
+            movieEntity.Character = marvelCharacterEntity;
+            marvelCharacterEntity.Actor = movieEntity;
+            return await _context.SaveChangesAsync() == 2;
+        }
     }
 }
