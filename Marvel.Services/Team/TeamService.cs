@@ -47,6 +47,7 @@ namespace Marvel.Services.Team
         {
             var teamEntity = await _ctx.Teams
             .Include(t => t.TeamMovies)
+            .Include(async t => t.TeamMembers)
             .FirstOrDefaultAsync(entity => entity.TeamId == teamId);
             return teamEntity is null ? null : new TeamDetail
             {
