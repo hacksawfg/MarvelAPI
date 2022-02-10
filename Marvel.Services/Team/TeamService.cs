@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
+using Marvel.Models.MarvelCharacter;
 using Marvel.Models.Movie;
 using Marvel.Models.Team;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,7 @@ namespace Marvel.Services.Team
         {
             var teamEntity = await _ctx.Teams
             .Include(t => t.TeamMovies)
+            .Include(m => m.TeamMembers)
             .FirstOrDefaultAsync(entity => entity.TeamId == teamId);
             return teamEntity is null ? null : new TeamDetail
             {
@@ -56,8 +58,9 @@ namespace Marvel.Services.Team
                 TeamMovies = teamEntity.TeamMovies.Select(t => new MovieListItem {
                     MovieName = t.MovieName
                 }).ToList(),
-                TeamMembers = teamEntity.TeamMembers.Select(m => new TeamListItem {
-                    TeamName = m.Name
+                TeamMembers = teamEntity.TeamMembers.Select(m => new MarvelCharacterList {
+                    Id = m.Id,
+                    Name = m.Name
                 }).ToList()
             };
         }

@@ -18,8 +18,6 @@ namespace Marvel.Data
         [MinLength(2, ErrorMessage = "{0} must be more than {1} characters in length.")]
         [MaxLength(100, ErrorMessage = "{0} must be less than {1} characters in length.")]
         public string Nemesis { get; set; }
-        public string TeamMembership { get; set; }
-        public string Appearances { get; set; }
         public string Powers { get; set; }
         public string Gear { get; set; }
         public ICollection<TeamEntity> Teams { get; set; }
