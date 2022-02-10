@@ -23,7 +23,7 @@ namespace Marvel.Data
         public ICollection<TeamEntity> Teams { get; set; }
         [ForeignKey(nameof(Actor))]
         public int? CastCrewId { get; set; }
-        public virtual CastCrewEntity Actor { get; set; }
+        public CastCrewEntity Actor { get; set; }
         public ICollection<MovieEntity> Movies { get; set; }
     }
 }
