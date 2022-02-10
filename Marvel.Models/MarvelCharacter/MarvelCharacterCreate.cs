@@ -8,6 +8,7 @@ namespace Marvel.Models.MarvelCharacter
 {
     public class MarvelCharacterCreate
     {
+        [Required]
         public string Name { get; set; }
         public string Nemesis { get; set; }
         public string TeamMembership { get; set; }

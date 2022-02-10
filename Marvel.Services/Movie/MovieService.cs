@@ -40,6 +40,7 @@ namespace Marvel.Services.Movie
                     // MovieCharacters = entity.MovieCharacters,
                     MovieDirector = entity.MovieDirector,
                     MovieTeams = entity.MovieTeams.Select(t => new TeamListItem {
+                        TeamId = t.TeamId,
                         TeamName = t.TeamName
                     }).ToList()
                 }).ToListAsync();
@@ -70,12 +71,9 @@ namespace Marvel.Services.Movie
         public async Task<bool> UpdateAMovieByIdAsync(MovieUpdate request)
         {
             var movieUpdate = await _context.Movies.FindAsync(request.MovieId);
-
-            movieUpdate.MovieName = request.MovieName;
-            movieUpdate.MovieBoxOfficeUSD = request.MovieBoxOfficeUSD;
-            movieUpdate.MovieCharacters = (ICollection<MarvelCharacterEntity>)request.MovieCharacters;
-            movieUpdate.MovieDirector = request.MovieDirector;
-            movieUpdate.MovieTeams = (ICollection<TeamEntity>)request.MovieTeams;
+            movieUpdate.MovieName = (request.MovieName ?? movieUpdate.MovieName);
+            movieUpdate.MovieBoxOfficeUSD = (request.MovieBoxOfficeUSD ?? movieUpdate.MovieBoxOfficeUSD);
+            movieUpdate.MovieDirector = (request.MovieDirector ?? movieUpdate.MovieDirector);
 
             return await _context.SaveChangesAsync() == 1;
 
