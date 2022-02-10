@@ -61,10 +61,9 @@ namespace Marvel.Services.MarvelCharacter
             };
         }
 
-         public async Task<bool> UpdateMarvelCharacterByIdAsync(MarvelCharacterUpdate request)
+        public async Task<bool> UpdateMarvelCharacterByIdAsync(MarvelCharacterUpdate request)
         {
-            var marvelCharacterUpdate = await _context.MarvelCharacters.FindAsync(request.Id);
-            marvelCharacterUpdate.Name = request.Name;
+            var marvelCharacterUpdate = await _context.MarvelCharacters.FindAsync(request.Name);
             marvelCharacterUpdate.Nemesis = request.Nemesis;
             marvelCharacterUpdate.TeamMembership = request.TeamMembership;
             marvelCharacterUpdate.Appearances = request.Appearances;
@@ -74,7 +73,7 @@ namespace Marvel.Services.MarvelCharacter
             return await _context.SaveChangesAsync() == 1;
         }
 
-         public async Task<bool> DeleteMarvelCharacterByIdAsync(int marvelCharacterId)
+        public async Task<bool> DeleteMarvelCharacterByIdAsync(int marvelCharacterId)
         {
             var marvelCharacterDelete = await _context.MarvelCharacters.FindAsync(marvelCharacterId);
 

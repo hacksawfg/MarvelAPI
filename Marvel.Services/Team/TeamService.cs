@@ -79,11 +79,14 @@ namespace Marvel.Services.Team
         }
         public async Task<bool> AddTeamToCharacterAsync(int teamId, AddTeamToCharacter request)
         {
-            var entity = await _ctx.MarvelCharacters.FindAsync(request.CharacterId);
+            var teamEntity = await _ctx.Teams.FindAsync(request.TeamId);
+            var characterEntity = await _ctx.MarvelCharacters
+                .Include(c => c.Teams)
+                .FirstOrDefaultAsync(c => c.Id == request.CharacterId);
 
             if (request.TeamId == teamId)
             {
-                entity.Id = request.CharacterId;
+                characterEntity.Teams.Add(teamEntity);
                 var numberOfChanges = await _ctx.SaveChangesAsync();
                 return numberOfChanges == 1;
             }
