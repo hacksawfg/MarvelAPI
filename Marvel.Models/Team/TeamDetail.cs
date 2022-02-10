@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Marvel.Data;
 using Marvel.Data.Entities;
+using Marvel.Models.MarvelCharacter;
 using Marvel.Models.Movie;
 
 namespace Marvel.Models.Team
@@ -15,7 +16,7 @@ namespace Marvel.Models.Team
         public string TeamName { get; set; }
         // public ICollection<CharacterEntity> TeamMembers { get; set; }
         public string Leader { get; set; }
-        public ICollection<MarvelCharacterEntity> TeamMembers { get; set; }
+        public ICollection<MarvelCharacterList> TeamMembers { get; set; }
         public ICollection<MovieListItem> TeamMovies { get; set; }
         
     }

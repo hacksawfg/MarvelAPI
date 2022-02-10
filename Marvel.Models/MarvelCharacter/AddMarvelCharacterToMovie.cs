@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Marvel.Models.MarvelCharacter
 {
-    public class MarvelCharacterUpdate
+    public class AddMarvelCharacterToMovie
     {
+        [Required]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Nemesis { get; set; }
-        public string Powers { get; set; }
-        public string Gear { get; set; }
+        [Required]
+        public int MovieId { get; set; }
     }
 }
