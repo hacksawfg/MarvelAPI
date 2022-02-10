@@ -76,10 +76,9 @@ namespace Marvel.Services.CastCrew
         public async Task<bool> UpdateCastCrewAsync(CastCrewUpdate request)
         {
             var entity = await _dbContext.CastAndCrewMembers.FindAsync(request.Id);
-            entity.Name = request.Name;
-            entity.Role = request.Role;
-            entity.Birthday = request.Birthday;
-            entity.ImdbPage = request.ImdbPage;
+            entity.Name = (request.Name ?? entity.Name);
+            entity.Role = (request.Role ?? entity.Role);
+            entity.ImdbPage = (request.ImdbPage ?? entity.ImdbPage);
             var numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
         }

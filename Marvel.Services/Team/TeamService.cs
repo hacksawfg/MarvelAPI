@@ -66,8 +66,8 @@ namespace Marvel.Services.Team
         public async Task<bool> UpdateTeamByIdAsync(TeamUpdate request)
         {
             var entity = await _ctx.Teams.FindAsync(request.TeamId);
-            entity.TeamName = request.TeamName;
-            entity.Leader = request.Leader;
+            entity.TeamName = (request.TeamName ?? entity.TeamName);
+            entity.Leader = (request.Leader ?? entity.Leader);
             var changes = await _ctx.SaveChangesAsync();
             return changes == 1;
         }
