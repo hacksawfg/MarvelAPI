@@ -18,5 +18,6 @@ namespace Marvel.Services.MarvelCharacter
          public Task<bool> UpdateMarvelCharacterByIdAsync(MarvelCharacterUpdate request);
          //Delete Character
          public Task<bool> DeleteMarvelCharacterByIdAsync(int marvelCharacterId);
+         public Task<bool> AddMarvelCharacterToMovieAsync(int Id, AddMarvelCharacterToMovie request);
     }
 }
