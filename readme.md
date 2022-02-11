@@ -3,10 +3,11 @@
 ## Introduction
 The Marvel API is designed to allow for the entry, retrieval, and editing of information on movies set in the Marvel universe.
 
+
 ---
 ## Table of Contents
 * [Technologies](#technologies)
-* [Launch](#launch)
+* [Key Commands for Implementation](#key-commands-for-implementation)
 * [Controller Information](#other-information)
 * [Movie Endpoints](#movie-endpoints)
 * [Team Endpoints](#team-endpoints)
@@ -24,6 +25,7 @@ The Marvel API is designed to allow for the entry, retrieval, and editing of inf
 * VS Code
 * Azure Data Studio
 * Docker Desktop
+* dbdiagram.io
 ---
 
 ## Key Commands for Implementation
@@ -32,6 +34,9 @@ The Marvel API is designed to allow for the entry, retrieval, and editing of inf
 3. `dotnet run --project Marvel.WebAPI`
 ---
 ## Other Information
+
+[Database Diagram](#https://dbdiagram.io/d/620145dc85022f4ee55079f6)
+
 There are four different controllers utilized in this application, each containing the associated list of endpoints in the current version:
 * **Movie** 
     * [Create a new movie](#create-a-movie)
@@ -268,6 +273,7 @@ There are four different controllers utilized in this application, each containi
 ---
 ## Team Members
 * Dan Ficklin
-* Alan Murugan
-* Findley Griffiths
-* Jon Yoli
+* [Alan Murugan](https://github.com/alanmurugan
+)
+* [Findley Griffiths](https://www.linkedin.com/in/findleygriffiths/)
+* Jon Yoli]
