@@ -130,7 +130,7 @@ There are four different controllers utilized in this application, each containi
 * URL - {baseURL}/Find
 * x-www-form-urlencoded Data 
     * Key: name
-    * Value {TeamName}
+    * Value: X-Force
 
 ### Update Team
 * URL - {baseURL}/Update/{teamId}
@@ -232,6 +232,9 @@ There are four different controllers utilized in this application, each containi
 * URL - {baseURL}/GetById/1
 ### Get Cast/Crew Details By Name
 * URL - {baseURL}/GetByName
+* x-www-form-urlencoded Data
+    * Key - name
+    * Value - Tom Holland
 ### Update Cast/Crew Information
 * URL - {baseURL}/Update
 * JSON
