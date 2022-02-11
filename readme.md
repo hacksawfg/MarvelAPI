@@ -11,17 +11,21 @@ The Marvel API is designed to allow for the entry, retrieval, and editing of inf
 * [Movie Endpoints](#movie-endpoints)
 * [Team Endpoints](#team-endpoints)
 * [Character Endpoints](#character-endpoints)
-* [Updating Entities](#updating-items)
+* [Cast/Crew Endpoints](#castcrew-endpoints)
 * [JSON Structure](#example-json-structures)
 
 ---
-## Technologies
+## Technologies & Software Utilized in Project Development
 * .NET SDK Version 5 - latest minor
 * dotnet-ef Version 6.0.1
 * MSSQL
+* Postman
+* VS Code
+* Azure Data Studio
+* Docker Desktop
 ---
 
-## Launch
+## Key Commands for Implementation
 1. `git clone https://github.com/hacksawfg/MarvelAPI`
 2. `dotnet-ef database update -p Marvel.Data/ -s Marvel.WebAPI/` (NOTE - this is bash command structure, PowerShell may look slightly different)
 3. `dotnet run --project Marvel.WebAPI`
@@ -69,15 +73,31 @@ There are four different controllers utilized in this application, each containi
 
 ### Create a movie
 * URL - {baseURL}/Create
+* JSON - Required field - movieName
+```
+{
+    "movieName":"Spider-Man: Homecoming"
+}
+```
 
 ### List All Movies
 * URL - {baseURL}/List
 
 ### Get Movie Details By Id
-* URL - {baseURL}/List/{movieId}
+* URL - {baseURL}/List/{movieId:int}
 
 ### Update Movie
 * URL - {baseURL}/Update
+* JSON
+```
+{
+    "movieId": 1,
+    "movieName":"Iron Man",
+    "releaseDate":"2008-05-02T00:00:01",
+    "movieBoxOfficeUSD":"1.214B",
+    "movieDirector":"Jon Favreau"
+}
+```
 
 ### Delete Movie By Id
 * URL - {baseURL}/Delete
@@ -91,6 +111,13 @@ There are four different controllers utilized in this application, each containi
 
 ### Create Team
 * URL - {baseURL}/Create
+* JSON - Required field - teamName
+```
+{
+    "teamName":"YoungAvengers",
+    "leader": "Iron Lad"
+}
+```
 
 ### List all Teams
 * URL - {baseURL}/List
@@ -100,16 +127,40 @@ There are four different controllers utilized in this application, each containi
 
 ### Get Team Details By Name
 * URL - {baseURL}/Find
-* Form data (x-www-form-urlencoded) Key: name, Value {TeamName}
+* x-www-form-urlencoded Data 
+    * Key: name
+    * Value {TeamName}
 
 ### Update Team
 * URL - {baseURL}/Update/{teamId}
+* JSON
+```
+{
+    "teamId": 2,
+    "teamName": "X-Men",
+    "leader": "Storm"
+}
+```
 
 ### Associate Team with Character
 * URL - {baseURL}/AddToCharacter/{teamId}
+* JSON - both fields require a value
+```
+{
+    "teamId": 2,
+    "characterId": 2
+}
+```
 
 ### Associate Team with Movie
 * URL - {baseURL}/AddToMovie/{teamId}
+* JSON - both fields require a value
+```
+{
+    "teamId": 1,
+    "characterId":1
+}
+```
 
 ### Delete Team
 * URL - {baseURL}/Delete/{teamId}
@@ -118,113 +169,65 @@ There are four different controllers utilized in this application, each containi
 
 ## Character Endpoints
 
+### BaseURL
+`www.examplehost.com/api/MarvelCharacter`
 
-
-## Listing Items - Complete List, or by ItemId
-
-Utilizing the same controllers listed above with http GET requests, the URL to pull a complete list of movies is as follows:
-
-    {baseUrl.com}/api/Movie/List
-
-
-To get a specific item, append the request with the integer value of the index, as below
-
-    {baseUrl.com}/api/Movie/List/1
-
+### Create Character
+* URL - {baseURL}/Create
+* JSON - Required Field - name
+```
+{
+    "name": "Spider-man"
+}
+```
+### List All Characters
+* URL - {baseURL}/List
+### Get Character Details By Id
+* URL - {baseURL}/GetById/{castCrewId}
+### Update Character
+* URL - {baseURL}/Update
+* JSON
+```
+{
+    "id":1,
+    "name":"Iron Man",
+    "nemesis":"Mandarin",
+    "powers":"Money, intelligence",
+    "gear":"Iron Man suits"
+}
+```
+### Associate a Character with a Movie
+* URL - {baseURL}/AddToMovie/{characterId}
+*JSON - both fields require values
+```
+{
+    "movieId": 2,
+    "Id": 2
+}
+```
+### Delete Character
+* URL - {baseURL}/Delete/{characterId}
 
 ---
 
-## Updating Items
+## Cast/Crew Endpoints
 
-Updating items utilize raw JSON in the http PUT request to update information utilizing the following URL structure
-
-    {baseUrl.com}/api/Movie/Update
-
-Example JSON Structure
-```
-{
-    "movieId": 1,
-    "movieName": "Iron Man",
-    "releaseDate": "0001-01-01T00:00:00",
-    "movieBoxOfficeUSD": 1,
-    "movieDirector":"Jon Favreau",
-    "movieTeams": null,
-    "movieCharacters": null
-}
-```
-
----
-## Deleting Items
-Deleting an item utilizes the integer index in combination with an http DELETE request to remove an item from the database table.  Example URL structure as below:
-
-    {baseUrl.com}/api/Movie/Delete/1
-
-
----
-
-## Example JSON Structures
-
-Movie
-* Required fields - movieId, movieName
-* Optional fields information
-    * releaseDate format (YYYY-MM-DDThh:mm:ss)
-    * movieBoxOffice - double to facilitate using exponents in value (i.e. 1.214e9)
-    * movieTeams, movieCharacters are populated & edited from other tables
-
-
-```
-{
-    "movieId": 1,
-    "movieName": "Iron Man",
-    "releaseDate": "2008-05-02T00:00:00",
-    "movieBoxOfficeUSD": 1.214e9,
-    "movieDirector":"Jon Favreau",
-    "movieTeams": null,
-    "movieCharacters": null
-}
-```
-Team
-* Required fields - teamId, teamName
-* Optional fields information
-    * releaseDate format (YYYY-MM-DDThh:mm:ss)
-    * movieBoxOffice - double to facilitate using exponents in value (i.e. 1.214e9)
-    * movieTeams, movieCharacters are populated & edited from other tables
-
-```
-{
-    "teamId": 1,
-    "teamName":"Avengers",
-    "leader":"Captain America"
-}
-```
-
-Character
-* Required fields - 
-* Optional fields information
-    * a
-```
-{
-    
-}
-```
-
-
-CastCrew
-* Required fields - name, role, ImdbPage
-* Optional fields information
-    * birthday format (YYYY-MM-DDThh:mm:ss)
-    * movies pulled from separate table
-```
-{
-    "name":"Jon Favreau",
-    "role":"Happy Hogan",
-    "birthday":"1966-10-19T00:00:00",
-    "ImdbPage":"https://www.imdb.com/name/nm0269463/",
-    "movies":null
-}
-```
-
-
+### Base URL
+`www.examplehost.com/api/CastCrew`
+### Create Cast/Crew Member
+* URL - {baseURL}/Create
+### List All Cast/Crew Members
+* URL - {baseURL}/List
+### Get Cast/Crew Details By Id
+* URL - {baseURL}/GetById/1
+### Get Cast/Crew Details By Name
+* URL - {baseURL}/GetByName
+### Update Cast/Crew Information
+* URL - {baseURL}/Update
+### Associate Cast/Crew with a Character
+* URL - {baseURL}/SetActorToCharacter
+### Associate Cast/Crew with a Movie
+* URL - {baseURL}/AddToMovie/{castCrewId}
 
 ---
 Team Members
