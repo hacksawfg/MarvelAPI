@@ -41,7 +41,7 @@ namespace Marvel.WebAPI.Controllers
         }
 
         [HttpGet("List/{marvelCharacterId:int}")]
-        public async Task<IActionResult> ListMarvelCharacterById(int marvelCharacterId)
+        public async Task<IActionResult> ListMarvelCharacterById([FromRoute]int marvelCharacterId)
         {
             var marvelCharacter = await _marvelCharacter.GetMarvelCharacterDetailAsync(marvelCharacterId);
 
@@ -80,6 +80,5 @@ namespace Marvel.WebAPI.Controllers
                 ? Ok("Cast/Crew member was added to the movie's details successfully!")
                 : BadRequest("Cast/Crew member could not be added to the movie's details.");
         }
-
     }
 }
