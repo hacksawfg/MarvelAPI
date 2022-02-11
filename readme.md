@@ -217,6 +217,15 @@ There are four different controllers utilized in this application, each containi
 `www.examplehost.com/api/CastCrew`
 ### Create Cast/Crew Member
 * URL - {baseURL}/Create
+* JSON - Required Fields - name, role, imdbPage
+```
+{
+    "name":"Chris Pratt",
+    "role": "actor",
+    "birthday":"1986-06-01T00:00:00",
+    "imdbPage":"https://www.imdb.com"
+}
+```
 ### List All Cast/Crew Members
 * URL - {baseURL}/List
 ### Get Cast/Crew Details By Id
@@ -225,10 +234,31 @@ There are four different controllers utilized in this application, each containi
 * URL - {baseURL}/GetByName
 ### Update Cast/Crew Information
 * URL - {baseURL}/Update
+* JSON
+{
+    "id":5,
+    "name":"Chris Pratt",
+    "role":"Actor",
+    "imdbPage":"www.imdb.com"
+}
 ### Associate Cast/Crew with a Character
 * URL - {baseURL}/SetActorToCharacter
+* JSON - both fields require values
+```
+{
+    "castCrewId": 3,
+    "marvelCharacterId": 2
+}
+```
 ### Associate Cast/Crew with a Movie
 * URL - {baseURL}/AddToMovie/{castCrewId}
+* JSON - both fields require values
+```
+{
+    "movieId": 2,
+    "castCrewId": 1
+}
+```
 ### Delete Cast/Crew Member
 * URL - {baseURL}/Delete/{castCrewId}
 
