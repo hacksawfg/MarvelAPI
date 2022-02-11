@@ -13,6 +13,7 @@ The Marvel API is designed to allow for the entry, retrieval, and editing of inf
 * [Character Endpoints](#character-endpoints)
 * [Cast/Crew Endpoints](#castcrew-endpoints)
 * [JSON Structure](#example-json-structures)
+* [Development Team](#team-members)
 
 ---
 ## Technologies & Software Utilized in Project Development
@@ -33,36 +34,36 @@ The Marvel API is designed to allow for the entry, retrieval, and editing of inf
 ## Other Information
 There are four different controllers utilized in this application, each containing the associated list of endpoints in the current version:
 * **Movie** 
-    * Create a new movie
-    * List all movies 
-    * Get details on a movie by unique ID 
-    * Update a movie
-    * Delete a movie
+    * [Create a new movie](#create-a-movie)
+    * [List all movies](#list-all-movies) 
+    * [Get details on a movie by unique ID](#get-movie-details-by-id) 
+    * [Update a movie](#update-movie)
+    * [Delete a movie by Id](#delete-movie-by-id)
 *  **MarvelCharacter** 
-    * Create a character
-    * List all characters 
-    * Get details on a character by unique ID
-    * Update a character
-    * Associate a character with a movie
-    * Delete a character
+    * [Create a character](#create-character)
+    * [List all characters](#list-all-characters) 
+    * [Get details on a character by unique ID](#get-character-details-by-id)
+    * [Update a character](#update-character)
+    * [Associate a character with a movie](#associate-a-character-with-a-movie)
+    * [Delete a character](#delete-character)
 * **Team** 
-    * Create a team
-    * List all teams
-    * Get team details by unique ID
-    * Get team details by team name
-    * Update a team
-    * Associate a character with a team
-    * Associate a character with a movie
-    * Delete a character
+    * [Create a team](#create-team)
+    * [List all teams](#list-all-teams)
+    * [Get team details by unique ID](#get-team-details-by-id)
+    * [Get team details by team name](#get-team-details-by-name)
+    * [Update a team](#update-team)
+    * [Associate a team with a character](#associate-team-with-character)
+    * [Associate a team with a movie](#associate-team-with-movie)
+    * [Delete a character](#delete-character)
 * **CastCrew**
-    * Create a cast/crew member
-    * List all cast and crew members
-    * Get cast/crew details via unique ID
-    * Get cast/crew details via name 
-    * Update a cast/crew member
-    * Associate a cast/crew member to a movie
-    * Associate a cast/crew member to a character
-    * Delete a cast/crew member
+    * [Create a cast/crew member](#create-castcrew-member)
+    * [List all cast and crew members](#list-all-castcrew-members)
+    * [Get cast/crew details via unique ID](#get-castcrew-details-by-id)
+    * [Get cast/crew details via name](#get-castcrew-details-by-name) 
+    * [Update a cast/crew member](#update-castcrew-information)
+    * [Associate a cast/crew member to a movie](#associate-castcrew-with-a-movie)
+    * [Associate a cast/crew member to a character](#associate-castcrew-with-a-character)
+    * [Delete a cast/crew member](#delete-castcrew-member)
 
 ---
 
@@ -228,9 +229,11 @@ There are four different controllers utilized in this application, each containi
 * URL - {baseURL}/SetActorToCharacter
 ### Associate Cast/Crew with a Movie
 * URL - {baseURL}/AddToMovie/{castCrewId}
+### Delete Cast/Crew Member
+* URL - {baseURL}/Delete/{castCrewId}
 
 ---
-Team Members
+## Team Members
 * Dan Ficklin
 * Alan Murugan
 * Findley Griffiths
