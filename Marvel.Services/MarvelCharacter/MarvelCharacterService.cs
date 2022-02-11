@@ -24,6 +24,7 @@ namespace Marvel.Services.MarvelCharacter
             var newMarvelCharacter = new MarvelCharacterEntity
             {
                 Name = marvelCharacter.Name,
+                SecretIdentity = marvelCharacter.SecretIdentity,
                 Nemesis = marvelCharacter.Nemesis,
                 Powers = marvelCharacter.Powers,
                 Gear = marvelCharacter.Gear
@@ -48,12 +49,16 @@ namespace Marvel.Services.MarvelCharacter
 
         public async Task<MarvelCharacterDetail> GetMarvelCharacterDetailAsync(int marvelCharacterId)
         {
-            var marvelCharacter = await _context.MarvelCharacters.Include(m => m.Movies).Include(t => t.Teams).Include(a => a.Actor).FirstOrDefaultAsync(c => c.Id == marvelCharacterId);
-
+            var marvelCharacter = await _context.MarvelCharacters
+            .Include(m => m.Movies)
+            .Include(t => t.Teams)
+            .Include(a => a.Actor)
+            .FirstOrDefaultAsync(c => c.Id == marvelCharacterId);
             return marvelCharacter is null ? null : new MarvelCharacterDetail
             {
                 Id = marvelCharacter.Id,
                 Name = marvelCharacter.Name,
+                SecretIdentity = marvelCharacter.SecretIdentity,
                 Nemesis = marvelCharacter.Nemesis,
                 Teams = marvelCharacter.Teams.Select(t => new TeamListItem {
                     TeamId = t.TeamId,
@@ -65,8 +70,8 @@ namespace Marvel.Services.MarvelCharacter
                 Powers = marvelCharacter.Powers,
                 Gear = marvelCharacter.Gear,
                 Actor = new CastCrewListItem {
-                    Id = (int)marvelCharacter.CastCrewId,
-                    Name = marvelCharacter.Actor.Name,
+                    Id = marvelCharacter.CastCrewId ?? 0,
+                    Name = marvelCharacter.Actor?.Name,
                 }
             };
         }
@@ -74,6 +79,7 @@ namespace Marvel.Services.MarvelCharacter
         {
             var marvelCharacterUpdate = await _context.MarvelCharacters.FindAsync(request.Id);
             marvelCharacterUpdate.Name = (request.Name ?? marvelCharacterUpdate.Name);
+            marvelCharacterUpdate.SecretIdentity = (request.SecretIdentity ?? marvelCharacterUpdate.SecretIdentity);
             marvelCharacterUpdate.Nemesis = (request.Nemesis ?? marvelCharacterUpdate.Nemesis);
             marvelCharacterUpdate.Powers = (request.Powers ?? marvelCharacterUpdate.Powers);
             marvelCharacterUpdate.Gear = (request.Gear ?? marvelCharacterUpdate.Gear);

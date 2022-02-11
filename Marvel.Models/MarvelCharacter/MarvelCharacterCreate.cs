@@ -10,6 +10,7 @@ namespace Marvel.Models.MarvelCharacter
     {
         [Required]
         public string Name { get; set; }
+        public string SecretIdentity { get; set; }
         public string Nemesis { get; set; }
         public string Powers { get; set; }
         public string Gear { get; set; }

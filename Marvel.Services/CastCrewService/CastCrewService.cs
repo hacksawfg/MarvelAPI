@@ -47,7 +47,7 @@ namespace Marvel.Services.CastCrew
         }
         public async Task<CastCrewDetail> GetCastCrewByNameAsync(string name)
         {
-            var castCrewEntity = await _dbContext.CastAndCrewMembers.Include(m => m.Movies).FirstOrDefaultAsync(e => 
+            var castCrewEntity = await _dbContext.CastAndCrewMembers.Include(m => m.Movies).Include(c => c.Character).FirstOrDefaultAsync(e => 
                 e.Name.ToLower() == name.ToLower());
             return castCrewEntity is null ? null : new CastCrewDetail
             {

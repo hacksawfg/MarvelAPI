@@ -77,10 +77,8 @@ namespace Marvel.Services.Movie
                     Name = k.Name,
                     Role = k.Role
                 }).ToList()
-
             };
         }
-
         public async Task<bool> UpdateAMovieByIdAsync(MovieUpdate request)
         {
             var movieUpdate = await _context.Movies.FindAsync(request.MovieId);
