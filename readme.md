@@ -1,28 +1,124 @@
 # Marvel Movie API
 
-## Key Information
-
-* There are four different controllers utilized in this application - **Movie**, **Character**, **Team**, and **CastCrew**.
-
-* Updating (PUT) and creating (POST) methods use routing and raw JSON format for the data.
-
-* Reading (GET) and deleting (DELETE) methods use routing to accomplish their tasks.
+## Introduction
+The Marvel API is designed to allow for the entry, retrieval, and editing of information on movies set in the Marvel universe.
 
 ---
-## Movie, Character, Team, Cast & Crew Creation
-
-### URL structure
-
-  The structure of the URL for the POST requests is as follows:
-
-    {baseUrl.com}/api/{ControllerName}/Create
-
-For example, to create a movie
-
-    {baseUrl.com}/api/Movie/Create
-
+## Table of Contents
+* [Technologies](#technologies)
+* [Launch](#launch)
+* [Controller Information](#other-information)
+* [Movie Endpoints](#movie-endpoints)
+* [Team Endpoints](#team-endpoints)
+* [Character Endpoints](#character-endpoints)
+* [Updating Entities](#updating-items)
+* [JSON Structure](#example-json-structures)
 
 ---
+## Technologies
+* .NET SDK Version 5 - latest minor
+* dotnet-ef Version 6.0.1
+* MSSQL
+---
+
+## Launch
+1. `git clone https://github.com/hacksawfg/MarvelAPI`
+2. `dotnet-ef database update -p Marvel.Data/ -s Marvel.WebAPI/` (NOTE - this is bash command structure, PowerShell may look slightly different)
+3. `dotnet run --project Marvel.WebAPI`
+---
+## Other Information
+There are four different controllers utilized in this application, each containing the associated list of endpoints in the current version:
+* **Movie** 
+    * Create a new movie
+    * List all movies 
+    * Get details on a movie by unique ID 
+    * Update a movie
+    * Delete a movie
+*  **MarvelCharacter** 
+    * Create a character
+    * List all characters 
+    * Get details on a character by unique ID
+    * Update a character
+    * Associate a character with a movie
+    * Delete a character
+* **Team** 
+    * Create a team
+    * List all teams
+    * Get team details by unique ID
+    * Get team details by team name
+    * Update a team
+    * Associate a character with a team
+    * Associate a character with a movie
+    * Delete a character
+* **CastCrew**
+    * Create a cast/crew member
+    * List all cast and crew members
+    * Get cast/crew details via unique ID
+    * Get cast/crew details via name 
+    * Update a cast/crew member
+    * Associate a cast/crew member to a movie
+    * Associate a cast/crew member to a character
+    * Delete a cast/crew member
+
+---
+
+## Movie Endpoints
+
+### Base URL
+`www.examplehost.com/api/Movie`
+
+### Create a movie
+* URL - {baseURL}/Create
+
+### List All Movies
+* URL - {baseURL}/List
+
+### Get Movie Details By Id
+* URL - {baseURL}/List/{movieId}
+
+### Update Movie
+* URL - {baseURL}/Update
+
+### Delete Movie By Id
+* URL - {baseURL}/Delete
+
+---
+
+## Team Endpoints
+
+### Base URL
+`www.examplehost.com/api/Team`
+
+### Create Team
+* URL - {baseURL}/Create
+
+### List all Teams
+* URL - {baseURL}/List
+
+### Get Team Details by ID
+* URL - {baseURL}/Get/{teamId}
+
+### Get Team Details By Name
+* URL - {baseURL}/Find
+* Form data (x-www-form-urlencoded) Key: name, Value {TeamName}
+
+### Update Team
+* URL - {baseURL}/Update/{teamId}
+
+### Associate Team with Character
+* URL - {baseURL}/AddToCharacter/{teamId}
+
+### Associate Team with Movie
+* URL - {baseURL}/AddToMovie/{teamId}
+
+### Delete Team
+* URL - {baseURL}/Delete/{teamId}
+
+---
+
+## Character Endpoints
+
+
 
 ## Listing Items - Complete List, or by ItemId
 
@@ -66,7 +162,7 @@ Deleting an item utilizes the integer index in combination with an http DELETE r
 
 ---
 
-## Example JSON Structures for Updating Data
+## Example JSON Structures
 
 Movie
 * Required fields - movieId, movieName

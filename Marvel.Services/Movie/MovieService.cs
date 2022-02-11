@@ -75,7 +75,8 @@ namespace Marvel.Services.Movie
                 MovieCastCrew = movie.MovieCastCrew.Select(k => new CastCrewListItem {
                     Id = k.Id,
                     Name = k.Name,
-                    Role = k.Role
+                    Role = k.Role,
+                    Character = k.Character.Name
                 }).ToList()
 
             };
